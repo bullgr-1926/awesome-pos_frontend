@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { login } from "../HelperFunctions";
+import { login } from "../../components/HelperFunctions";
 import queryString from "query-string";
 import "./Login.css";
 
@@ -34,7 +34,7 @@ const Login = () => {
 
     login(queryString.stringify(user)).then((res) => {
       if (res) {
-        history.push("/profile");
+        history.push("/dashboard");
       }
     });
   };
@@ -53,6 +53,7 @@ const Login = () => {
                 name="email"
                 placeholder="Enter email"
                 value={loginUser.email}
+                required
                 onChange={onChange}
               />
             </div>
@@ -64,6 +65,7 @@ const Login = () => {
                 name="password"
                 placeholder="Password"
                 value={loginUser.password}
+                required
                 onChange={onChange}
               />
             </div>

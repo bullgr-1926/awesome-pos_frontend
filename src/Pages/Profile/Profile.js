@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import jwt_decode from "jwt-decode";
+import { getToken } from "../../components/HelperFunctions";
 
 const Profile = () => {
   const [profile, setProfile] = useState({
@@ -12,8 +12,7 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    const token = localStorage.usertoken;
-    const decoded = jwt_decode(token);
+    const decoded = getToken();
 
     setProfile({
       username: decoded.user.username,
