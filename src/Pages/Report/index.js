@@ -1,4 +1,4 @@
-import "./Report.css";
+import "./index.css";
 
 const Report = () => {
   return (

@@ -1,13 +1,13 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 
+// Api url preset
+export const apiUrl = `http://localhost:3002/`;
+
 // Register a user
 export const register = async (newUser) => {
   try {
-    const response = await axios.post(
-      "http://localhost:3002/user/register",
-      newUser
-    );
+    const response = await axios.post(`${apiUrl}user/register`, newUser);
     if (response) {
       console.log("Registered");
     }
@@ -20,7 +20,7 @@ export const register = async (newUser) => {
 // Login a user
 export const login = async (user) => {
   try {
-    const response = await axios.post("http://localhost:3002/user/login", user);
+    const response = await axios.post(`${apiUrl}user/login`, user);
     // Save the token to localStorage
     localStorage.setItem("usertoken", response.data);
     // Save the user role to localStorage
@@ -39,7 +39,7 @@ export const getToken = () => {
   return decoded;
 };
 
-// Return the decoded token (if any)
+// Save the user role to localStorage
 export const setUserRole = () => {
   const userRole = getToken();
   localStorage.setItem("userrole", userRole.user.role);

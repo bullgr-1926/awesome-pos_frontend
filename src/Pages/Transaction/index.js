@@ -1,4 +1,4 @@
-import "./Transaction.css";
+import "./index.css";
 
 const Transaction = () => {
   return (

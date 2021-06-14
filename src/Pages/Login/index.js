@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { login } from "../../components/HelperFunctions";
 import queryString from "query-string";
-import "./Login.css";
+import "./index.css";
 
 const Login = () => {
   const [loginUser, setLoginUser] = useState({

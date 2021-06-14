@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "../../assets/logo.png";
-import "./Landing.css";
+import "./index.css";
 
 const Landing = () => {
   return (

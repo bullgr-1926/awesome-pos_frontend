@@ -1,16 +1,22 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import Navbar from "./components/Navbar/Navbar";
-import Landing from "./Pages/Landing/Landing";
-import Login from "./Pages/Login/Login";
-import Dashboard from "./Pages/Dashboard/Dashboard";
-import Transaction from "./Pages/Transaction/Transaction";
-import Report from "./Pages/Report/Report";
-import Categories from "./Pages/Categories/Categories";
-import Products from "./Pages/Products/Products";
-import Users from "./Pages/Users/Users";
-import Profile from "./Pages/Profile/Profile";
+// Navigation bar
+import Navbar from "./components/Navbar";
+
+// Pages
+import Landing from "./Pages/Landing";
+import Login from "./Pages/Login";
+import Dashboard from "./Pages/Dashboard";
+import Transaction from "./Pages/Transaction";
+import Report from "./Pages/Report";
+import Categories from "./Pages/Categories";
+import Products from "./Pages/Products";
+import Users from "./Pages/Users";
+import Profile from "./Pages/Profile";
+
+// Components
+import CategoryEdit from "./components/CategoryEdit";
 
 const App = () => {
   return (
@@ -28,6 +34,7 @@ const App = () => {
             <Route exact path="/products" component={Products} />
             <Route exact path="/users" component={Users} />
             <Route exact path="/profile" component={Profile} />
+            <Route exact path="/category_edit" component={CategoryEdit} />
           </div>
         </div>
       </div>
