@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { apiUrl } from "../../components/HelperFunctions";
-import CategoryEdit from "../../components/CategoryEdit";
 import axios from "axios";
 import "./index.css";
 
 const Categories = () => {
+  const history = useHistory();
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
 
@@ -54,7 +54,8 @@ const Categories = () => {
 
   // Route to CategoryEdit with the correspond id
   const handleEditClick = (e) => {
-    console.log(e);
+    const categoryToEdit = data[e.target.id];
+    history.push("/category_edit", { params: categoryToEdit });
   };
 
   return (
@@ -81,6 +82,8 @@ const Categories = () => {
             <th scope="col">Title</th>
             <th scope="col">Description</th>
             <th scope="col">Color</th>
+            <th scope="col">Discount (%)</th>
+            <th scope="col">Discount Exp.</th>
             <th scope="col">Edit</th>
           </tr>
         </thead>
@@ -90,7 +93,13 @@ const Categories = () => {
               <th scope="col">{index + 1}</th>
               <td>{item.title}</td>
               <td>{item.description}</td>
-              <td>{item.color}</td>
+              <td>
+                <span style={{ color: item.color }}>
+                  <i className="bi bi-circle-fill"></i>
+                </span>
+              </td>
+              <td>{item.discount}</td>
+              <td>{item.discountExpiration}</td>
               <td>
                 <button className="btn" type="button">
                   <i

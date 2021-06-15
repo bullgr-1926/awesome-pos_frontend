@@ -59,6 +59,11 @@ const Navbar = () => {
         </Link>
       </li>
       <li className="nav-item">
+        <Link to="/store" className="nav-link">
+          Store
+        </Link>
+      </li>
+      <li className="nav-item">
         <a href="#endregion" onClick={logOut} className="nav-link">
           Logout
         </a>

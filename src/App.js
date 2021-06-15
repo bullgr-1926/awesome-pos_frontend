@@ -14,6 +14,7 @@ import Categories from "./Pages/Categories";
 import Products from "./Pages/Products";
 import Users from "./Pages/Users";
 import Profile from "./Pages/Profile";
+import Store from "./Pages/Store";
 
 // Components
 import CategoryEdit from "./components/CategoryEdit";
@@ -34,6 +35,7 @@ const App = () => {
             <Route exact path="/products" component={Products} />
             <Route exact path="/users" component={Users} />
             <Route exact path="/profile" component={Profile} />
+            <Route exact path="/store" component={Store} />
             <Route exact path="/category_edit" component={CategoryEdit} />
           </div>
         </div>

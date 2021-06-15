@@ -69,7 +69,10 @@ const Login = () => {
                 onChange={onChange}
               />
             </div>
-            <button type="submit" className="btn btn-lg btn-primary btn-block">
+            <button
+              type="submit"
+              className="btn btn-lg btn-secondary btn-block"
+            >
               Sign in
             </button>
           </form>
