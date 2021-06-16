@@ -32,6 +32,59 @@ export const login = async (user) => {
   }
 };
 
+// Create a new category item
+export const categoryCreate = async (categoryToCreate) => {
+  try {
+    const response = await axios.post(
+      `${apiUrl}categories/add_category`,
+      categoryToCreate,
+      {
+        headers: {
+          "auth-token": localStorage.usertoken,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error.response.data);
+    alert(error.response.data);
+  }
+};
+
+// Update the given category item
+export const categoryUpdate = async (id, categoryToEdit) => {
+  try {
+    const response = await axios.put(
+      `${apiUrl}categories/${id}`,
+      categoryToEdit,
+      {
+        headers: {
+          "auth-token": localStorage.usertoken,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error.response.data);
+    alert(error.response.data);
+  }
+};
+
+// Delete the given category item
+export const categoryDelete = async (id) => {
+  try {
+    const response = await axios.delete(`${apiUrl}categories/${id}`, {
+      headers: {
+        "auth-token": localStorage.usertoken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error.response.data);
+    alert(error.response.data);
+  }
+};
+
 // Return the decoded token (if any)
 export const getToken = () => {
   const token = localStorage.usertoken;

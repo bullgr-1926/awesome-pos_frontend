@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+/* import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import {
   categoryUpdate,
@@ -8,10 +8,10 @@ import { useHistory } from "react-router-dom";
 import queryString from "query-string";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "./index.css";
+import "./index.css"; */
 
-const CategoryEdit = () => {
-  let history = useHistory();
+const ProductEdit = () => {
+  /* let history = useHistory();
 
   // Get the params and set them to data object
   const location = useLocation();
@@ -24,9 +24,9 @@ const CategoryEdit = () => {
     color: categoryToEdit.color,
     discount: categoryToEdit.discount,
     discountExpiration: categoryToEdit.discountExpiration,
-  });
+  }); */
 
-  // Submit the changes
+  /* // Submit the changes
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -78,10 +78,10 @@ const CategoryEdit = () => {
   const onChangeDelete = (e) => {
     let value = e.target.value;
     setDeleteCategory(value);
-  };
+  }; */
 
-  return (
-    <div className="container">
+  return {
+    /* <div className="container">
       <div className="row">
         <div className="col-md-6 mt-5 mx-auto">
           <form noValidate onSubmit={onSubmit}>
@@ -167,8 +167,8 @@ const CategoryEdit = () => {
           </form>
         </div>
       </div>
-    </div>
-  );
+    </div> */
+  };
 };
 
-export default CategoryEdit;
+export default ProductEdit;

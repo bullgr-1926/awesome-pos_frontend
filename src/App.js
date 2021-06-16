@@ -18,6 +18,9 @@ import Store from "./Pages/Store";
 
 // Components
 import CategoryEdit from "./components/CategoryEdit";
+import CategoryNew from "./components/CategoryNew";
+import ProductEdit from "./components/ProductEdit";
+import ProductNew from "./components/ProductNew";
 
 const App = () => {
   return (
@@ -37,6 +40,9 @@ const App = () => {
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/store" component={Store} />
             <Route exact path="/category_edit" component={CategoryEdit} />
+            <Route exact path="/category_new" component={CategoryNew} />
+            <Route exact path="/product_edit" component={ProductEdit} />
+            <Route exact path="/product_new" component={ProductNew} />
           </div>
         </div>
       </div>

@@ -1,52 +1,31 @@
-import { useLocation } from "react-router-dom";
 import { useState } from "react";
-import {
-  categoryUpdate,
-  categoryDelete,
-} from "../../components/HelperFunctions";
+import { categoryCreate } from "../../components/HelperFunctions";
 import { useHistory } from "react-router-dom";
 import queryString from "query-string";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./index.css";
 
-const CategoryEdit = () => {
+const CategoryNew = () => {
   let history = useHistory();
-
-  // Get the params and set them to data object
-  const location = useLocation();
-  const categoryToEdit = location.state.params;
   const [startDate, setStartDate] = useState(new Date());
-  const [deleteCategory, setDeleteCategory] = useState("");
   const [data, setData] = useState({
-    title: categoryToEdit.title,
-    description: categoryToEdit.description,
-    color: categoryToEdit.color,
-    discount: categoryToEdit.discount,
-    discountExpiration: categoryToEdit.discountExpiration,
+    title: "",
+    description: "",
+    color: "#ffffff",
+    discount: 0,
+    discountExpiration: new Date().toLocaleDateString(),
   });
 
   // Submit the changes
   const onSubmit = (e) => {
     e.preventDefault();
 
-    // Check if user choose to delete
-    if (deleteCategory === "DELETE") {
-      categoryDelete(categoryToEdit._id).then((res) => {
-        if (res) {
-          history.push("/categories");
-        }
-      });
-    } else {
-      // If not, update the category
-      categoryUpdate(categoryToEdit._id, queryString.stringify(data)).then(
-        (res) => {
-          if (res) {
-            history.push("/categories");
-          }
-        }
-      );
-    }
+    categoryCreate(queryString.stringify(data)).then((res) => {
+      if (res) {
+        history.push("/categories");
+      }
+    });
   };
 
   // Submit the changes from date picker
@@ -72,12 +51,6 @@ const CategoryEdit = () => {
         [keyName]: value,
       };
     });
-  };
-
-  // Change the correspond object field
-  const onChangeDelete = (e) => {
-    let value = e.target.value;
-    setDeleteCategory(value);
   };
 
   return (
@@ -145,19 +118,6 @@ const CategoryEdit = () => {
                 onChange={(date) => onDateChange(date)}
               />
             </div>
-            <div className="form-group">
-              <label htmlFor="delete" style={{ color: "red" }}>
-                Delete
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                name="delete"
-                placeholder="Enter DELETE to delete the category"
-                value={deleteCategory}
-                onChange={onChangeDelete}
-              />
-            </div>
             <button
               type="submit"
               className="btn btn-lg btn-secondary btn-block"
@@ -171,4 +131,4 @@ const CategoryEdit = () => {
   );
 };
 
-export default CategoryEdit;
+export default CategoryNew;

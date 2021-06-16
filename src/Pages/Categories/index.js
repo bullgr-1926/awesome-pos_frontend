@@ -70,7 +70,13 @@ const Categories = () => {
           setSearch(e.target.value);
         }}
       />
-      <button className="btn btn-dark button-right" type="button">
+      <button
+        className="btn btn-dark button-right"
+        type="button"
+        onClick={() => {
+          history.push("/category_new");
+        }}
+      >
         New
       </button>
       <br />
