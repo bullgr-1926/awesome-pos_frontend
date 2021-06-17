@@ -6,26 +6,10 @@ import "./index.css";
 
 const Products = () => {
   const history = useHistory();
-  const [categories, setCategories] = useState([]);
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    // Get all categories
-    const fetchAllCategories = async () => {
-      try {
-        const response = await axios.get(`${apiUrl}categories/`, {
-          headers: {
-            "auth-token": localStorage.usertoken,
-          },
-        });
-        setCategories(response.data.allCategories);
-      } catch (error) {
-        console.error(error.response.data);
-        alert(error.response.data);
-      }
-    };
-
     // Get all products
     const fetchAllProducts = async () => {
       try {
@@ -56,11 +40,6 @@ const Products = () => {
       }
     };
 
-    // Fetch all categories if not already fetched
-    if (!categories) {
-      fetchAllCategories();
-    }
-
     // Fetch all data if search field is empty
     if (!search) {
       fetchAllProducts();
@@ -68,7 +47,7 @@ const Products = () => {
       // Fetch the data correspond the search field
       fetchProductsBySearch();
     }
-  }, [search, categories]);
+  }, [search]);
 
   // Route to CategoryEdit with the correspond id
   const handleEditClick = (e) => {
@@ -104,10 +83,12 @@ const Products = () => {
           <tr>
             <th scope="col">#</th>
             <th scope="col">Title</th>
-            <th scope="col">Description</th>
-            <th scope="col">Color</th>
-            <th scope="col">Discount (%)</th>
-            <th scope="col">Discount Exp.</th>
+            <th scope="col">Descr.</th>
+            <th scope="col">Categ.</th>
+            <th scope="col">Price</th>
+            <th scope="col">Barcode</th>
+            <th scope="col">Disc. (%)</th>
+            <th scope="col">Disc. Exp.</th>
             <th scope="col">Edit</th>
           </tr>
         </thead>
@@ -117,11 +98,9 @@ const Products = () => {
               <th scope="col">{index + 1}</th>
               <td>{item.title}</td>
               <td>{item.description}</td>
-              <td>
-                <span style={{ color: item.color }}>
-                  <i className="bi bi-circle-fill"></i>
-                </span>
-              </td>
+              <td>{item.category}</td>
+              <td>{item.price}</td>
+              <td>{item.barcode}</td>
               <td>{item.discount}</td>
               <td>{item.discountExpiration}</td>
               <td>

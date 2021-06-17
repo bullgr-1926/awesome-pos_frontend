@@ -1,29 +1,62 @@
-/* import { useState } from "react";
-import { categoryCreate } from "../../components/HelperFunctions";
+import { useState, useEffect } from "react";
+import { productCreate, apiUrl } from "../../components/HelperFunctions";
 import { useHistory } from "react-router-dom";
 import queryString from "query-string";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "./index.css"; */
+import axios from "axios";
+import "./index.css";
+import Dropdown from "react-dropdown";
+import "react-dropdown/style.css";
 
 const ProductNew = () => {
-  /* let history = useHistory();
+  let history = useHistory();
+
+  // Get the params and set them to data object
   const [startDate, setStartDate] = useState(new Date());
+  const [categories, setCategories] = useState([]);
   const [data, setData] = useState({
     title: "",
     description: "",
-    color: "#ffffff",
+    category: "",
+    price: 0,
+    barcode: "0",
     discount: 0,
     discountExpiration: new Date().toLocaleDateString(),
   });
+
+  useEffect(() => {
+    // Get all categories
+    const fetchAllCategories = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}categories/`, {
+          headers: {
+            "auth-token": localStorage.usertoken,
+          },
+        });
+        // Set only the titles of the categories to the array
+        response.data.allCategories.forEach((element) => {
+          setCategories((previous) => [...previous, element["title"]]);
+        });
+      } catch (error) {
+        console.error(error.response.data);
+        alert(error.response.data);
+      }
+    };
+
+    // Fetch all categories if not already fetched
+    if (categories.length === 0) {
+      fetchAllCategories();
+    }
+  }, [categories]);
 
   // Submit the changes
   const onSubmit = (e) => {
     e.preventDefault();
 
-    categoryCreate(queryString.stringify(data)).then((res) => {
+    productCreate(queryString.stringify(data)).then((res) => {
       if (res) {
-        history.push("/categories");
+        history.push("/products");
       }
     });
   };
@@ -51,15 +84,26 @@ const ProductNew = () => {
         [keyName]: value,
       };
     });
-  }; */
+  };
 
-  return {
-    /* <div className="container">
+  // Change the category from dropdown
+  const onDropdownChange = (e) => {
+    let value = e.value;
+    setData((previous) => {
+      return {
+        ...previous,
+        category: value,
+      };
+    });
+  };
+
+  return (
+    <div className="container">
       <div className="row">
         <div className="col-md-6 mt-5 mx-auto">
           <form noValidate onSubmit={onSubmit}>
             <h1 className="h3 mb-3 font-weight-normal">
-              Please edit or delete the selected category
+              Please edit or delete the selected product
             </h1>
             <div className="form-group">
               <label htmlFor="title">Title</label>
@@ -86,12 +130,34 @@ const ProductNew = () => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="color">Color</label>
+              <label htmlFor="category">Category</label>{" "}
+              <Dropdown
+                options={categories}
+                onChange={onDropdownChange}
+                value={data.category}
+                placeholder="Select a category"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="price">Price</label>
               <input
-                type="color"
-                className="form-control form-control-color"
-                name="color"
-                value={data.color}
+                type="number"
+                className="form-control"
+                name="price"
+                value={data.price}
+                required
+                min="0"
+                onChange={onChange}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="barcode">Barcode</label>
+              <input
+                type="text"
+                className="form-control"
+                name="barcode"
+                placeholder="Enter barcode"
+                value={data.barcode}
                 required
                 onChange={onChange}
               />
@@ -125,10 +191,12 @@ const ProductNew = () => {
               Submit changes
             </button>
           </form>
+          <br />
+          <br />
         </div>
       </div>
-    </div> */
-  };
+    </div>
+  );
 };
 
 export default ProductNew;

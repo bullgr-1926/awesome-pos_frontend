@@ -1,48 +1,80 @@
-/* import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 import {
-  categoryUpdate,
-  categoryDelete,
+  productUpdate,
+  productDelete,
+  apiUrl,
 } from "../../components/HelperFunctions";
 import { useHistory } from "react-router-dom";
 import queryString from "query-string";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "./index.css"; */
+import axios from "axios";
+import "./index.css";
+import Dropdown from "react-dropdown";
+import "react-dropdown/style.css";
 
 const ProductEdit = () => {
-  /* let history = useHistory();
+  let history = useHistory();
 
   // Get the params and set them to data object
   const location = useLocation();
-  const categoryToEdit = location.state.params;
+  const productToEdit = location.state.params;
   const [startDate, setStartDate] = useState(new Date());
-  const [deleteCategory, setDeleteCategory] = useState("");
+  const [deleteProduct, setDeleteProduct] = useState("");
+  const [categories, setCategories] = useState([]);
   const [data, setData] = useState({
-    title: categoryToEdit.title,
-    description: categoryToEdit.description,
-    color: categoryToEdit.color,
-    discount: categoryToEdit.discount,
-    discountExpiration: categoryToEdit.discountExpiration,
-  }); */
+    title: productToEdit.title,
+    description: productToEdit.description,
+    category: productToEdit.category,
+    price: productToEdit.price,
+    barcode: productToEdit.barcode,
+    discount: productToEdit.discount,
+    discountExpiration: productToEdit.discountExpiration,
+  });
 
-  /* // Submit the changes
+  useEffect(() => {
+    // Get all categories
+    const fetchAllCategories = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}categories/`, {
+          headers: {
+            "auth-token": localStorage.usertoken,
+          },
+        });
+        // Set only the titles of the categories to the array
+        response.data.allCategories.forEach((element) => {
+          setCategories((previous) => [...previous, element["title"]]);
+        });
+      } catch (error) {
+        console.error(error.response.data);
+        alert(error.response.data);
+      }
+    };
+
+    // Fetch all categories if not already fetched
+    if (categories.length === 0) {
+      fetchAllCategories();
+    }
+  }, [categories]);
+
+  // Submit the changes
   const onSubmit = (e) => {
     e.preventDefault();
 
     // Check if user choose to delete
-    if (deleteCategory === "DELETE") {
-      categoryDelete(categoryToEdit._id).then((res) => {
+    if (deleteProduct === "DELETE") {
+      productDelete(productToEdit._id).then((res) => {
         if (res) {
-          history.push("/categories");
+          history.push("/products");
         }
       });
     } else {
-      // If not, update the category
-      categoryUpdate(categoryToEdit._id, queryString.stringify(data)).then(
+      // If not, update the product
+      productUpdate(productToEdit._id, queryString.stringify(data)).then(
         (res) => {
           if (res) {
-            history.push("/categories");
+            history.push("/products");
           }
         }
       );
@@ -74,19 +106,30 @@ const ProductEdit = () => {
     });
   };
 
+  // Change the category from dropdown
+  const onDropdownChange = (e) => {
+    let value = e.value;
+    setData((previous) => {
+      return {
+        ...previous,
+        category: value,
+      };
+    });
+  };
+
   // Change the correspond object field
   const onChangeDelete = (e) => {
     let value = e.target.value;
-    setDeleteCategory(value);
-  }; */
+    setDeleteProduct(value);
+  };
 
-  return {
-    /* <div className="container">
+  return (
+    <div className="container">
       <div className="row">
         <div className="col-md-6 mt-5 mx-auto">
           <form noValidate onSubmit={onSubmit}>
             <h1 className="h3 mb-3 font-weight-normal">
-              Please edit or delete the selected category
+              Please edit or delete the selected product
             </h1>
             <div className="form-group">
               <label htmlFor="title">Title</label>
@@ -113,12 +156,34 @@ const ProductEdit = () => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="color">Color</label>
+              <label htmlFor="category">Category</label>{" "}
+              <Dropdown
+                options={categories}
+                onChange={onDropdownChange}
+                value={productToEdit.category}
+                placeholder="Select a category"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="price">Price</label>
               <input
-                type="color"
-                className="form-control form-control-color"
-                name="color"
-                value={data.color}
+                type="number"
+                className="form-control"
+                name="price"
+                value={data.price}
+                required
+                min="0"
+                onChange={onChange}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="barcode">Barcode</label>
+              <input
+                type="text"
+                className="form-control"
+                name="barcode"
+                placeholder="Enter barcode"
+                value={data.barcode}
                 required
                 onChange={onChange}
               />
@@ -153,8 +218,8 @@ const ProductEdit = () => {
                 type="text"
                 className="form-control"
                 name="delete"
-                placeholder="Enter DELETE to delete the category"
-                value={deleteCategory}
+                placeholder="Enter DELETE to delete the product"
+                value={deleteProduct}
                 onChange={onChangeDelete}
               />
             </div>
@@ -165,10 +230,12 @@ const ProductEdit = () => {
               Submit changes
             </button>
           </form>
+          <br />
+          <br />
         </div>
       </div>
-    </div> */
-  };
+    </div>
+  );
 };
 
 export default ProductEdit;

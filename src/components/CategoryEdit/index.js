@@ -165,6 +165,8 @@ const CategoryEdit = () => {
               Submit changes
             </button>
           </form>
+          <br />
+          <br />
         </div>
       </div>
     </div>

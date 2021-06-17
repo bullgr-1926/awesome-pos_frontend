@@ -86,10 +86,10 @@ const Categories = () => {
           <tr>
             <th scope="col">#</th>
             <th scope="col">Title</th>
-            <th scope="col">Description</th>
+            <th scope="col">Descr.</th>
             <th scope="col">Color</th>
-            <th scope="col">Discount (%)</th>
-            <th scope="col">Discount Exp.</th>
+            <th scope="col">Disc. (%)</th>
+            <th scope="col">Disc. Exp.</th>
             <th scope="col">Edit</th>
           </tr>
         </thead>

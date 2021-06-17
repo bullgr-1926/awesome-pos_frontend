@@ -4,7 +4,9 @@ import jwt_decode from "jwt-decode";
 // Api url preset
 export const apiUrl = `http://localhost:3002/`;
 
+//
 // Register a user
+//
 export const register = async (newUser) => {
   try {
     const response = await axios.post(`${apiUrl}user/register`, newUser);
@@ -17,7 +19,9 @@ export const register = async (newUser) => {
   }
 };
 
+//
 // Login a user
+//
 export const login = async (user) => {
   try {
     const response = await axios.post(`${apiUrl}user/login`, user);
@@ -32,7 +36,9 @@ export const login = async (user) => {
   }
 };
 
+//
 // Create a new category item
+//
 export const categoryCreate = async (categoryToCreate) => {
   try {
     const response = await axios.post(
@@ -51,7 +57,9 @@ export const categoryCreate = async (categoryToCreate) => {
   }
 };
 
+//
 // Update the given category item
+//
 export const categoryUpdate = async (id, categoryToEdit) => {
   try {
     const response = await axios.put(
@@ -70,7 +78,9 @@ export const categoryUpdate = async (id, categoryToEdit) => {
   }
 };
 
+//
 // Delete the given category item
+//
 export const categoryDelete = async (id) => {
   try {
     const response = await axios.delete(`${apiUrl}categories/${id}`, {
@@ -85,14 +95,73 @@ export const categoryDelete = async (id) => {
   }
 };
 
+//
+// Create a new product item
+//
+export const productCreate = async (productToCreate) => {
+  try {
+    const response = await axios.post(
+      `${apiUrl}products/add_product`,
+      productToCreate,
+      {
+        headers: {
+          "auth-token": localStorage.usertoken,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error.response.data);
+    alert(error.response.data);
+  }
+};
+
+//
+// Update the given category item
+//
+export const productUpdate = async (id, productToEdit) => {
+  try {
+    const response = await axios.put(`${apiUrl}products/${id}`, productToEdit, {
+      headers: {
+        "auth-token": localStorage.usertoken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error.response.data);
+    alert(error.response.data);
+  }
+};
+
+//
+// Delete the given category item
+//
+export const productDelete = async (id) => {
+  try {
+    const response = await axios.delete(`${apiUrl}products/${id}`, {
+      headers: {
+        "auth-token": localStorage.usertoken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error.response.data);
+    alert(error.response.data);
+  }
+};
+
+//
 // Return the decoded token (if any)
+//
 export const getToken = () => {
   const token = localStorage.usertoken;
   const decoded = jwt_decode(token);
   return decoded;
 };
 
+//
 // Save the user role to localStorage
+//
 export const setUserRole = () => {
   const userRole = getToken();
   localStorage.setItem("userrole", userRole.user.role);
