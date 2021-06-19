@@ -96,6 +96,27 @@ export const categoryDelete = async (id) => {
 };
 
 //
+// Get the products by category
+//
+export const productsByCategory = async (categoryToSearch) => {
+  try {
+    const response = await axios.post(
+      `${apiUrl}products/category`,
+      categoryToSearch,
+      {
+        headers: {
+          "auth-token": localStorage.usertoken,
+        },
+      }
+    );
+    return response.data.getProducts;
+  } catch (error) {
+    console.error(error.response.data);
+    alert(error.response.data);
+  }
+};
+
+//
 // Create a new product item
 //
 export const productCreate = async (productToCreate) => {
