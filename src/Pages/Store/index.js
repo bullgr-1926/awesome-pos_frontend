@@ -1,78 +1,146 @@
+import { useState, useEffect } from "react";
+import { apiUrl } from "../../components/HelperFunctions";
+import axios from "axios";
 import "./index.css";
 
 const Store = () => {
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  //
+  // Fetch the data on the beginning and on every search
+  //
+  useEffect(() => {
+    // Get all categories
+    const fetchAllData = async () => {
+      try {
+        setIsLoading(true);
+        const response = await axios.get(`${apiUrl}store/`, {
+          headers: {
+            "auth-token": localStorage.usertoken,
+          },
+        });
+        // Set only the first array entry
+        setData(response.data.store[0]);
+        setIsLoading(false);
+      } catch (error) {
+        console.error(error.response.data);
+        alert(error.response.data);
+      }
+    };
+
+    fetchAllData();
+  }, []);
+
   return (
-    <div className="container">
+    <div className="container fadeIn">
       <div className="col-md-6 mt-5 mx-auto">
-        <h1 className="text-center">Store Page</h1>
-        <form>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="inputEmail4">Email</label>
-              <input
-                type="email"
-                class="form-control"
-                id="inputEmail4"
-                placeholder="Email"
-              />
-            </div>
-            <div class="form-group col-md-6">
-              <label for="inputPassword4">Password</label>
-              <input
-                type="password"
-                class="form-control"
-                id="inputPassword4"
-                placeholder="Password"
-              />
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="inputAddress">Address</label>
-            <input
-              type="text"
-              class="form-control"
-              id="inputAddress"
-              placeholder="1234 Main St"
-            />
-          </div>
-          <div class="form-group">
-            <label for="inputAddress2">Address 2</label>
-            <input
-              type="text"
-              class="form-control"
-              id="inputAddress2"
-              placeholder="Apartment, studio, or floor"
-            />
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="inputCity">City</label>
-              <input type="text" class="form-control" id="inputCity" />
-            </div>
-            <div class="form-group col-md-4">
-              <label for="inputState">State</label>
-              <select id="inputState" class="form-control">
-                <option selected>Choose...</option>
-                <option>...</option>
-              </select>
-            </div>
-            <div class="form-group col-md-2">
-              <label for="inputZip">Zip</label>
-              <input type="text" class="form-control" id="inputZip" />
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="gridCheck" />
-              <label class="form-check-label" for="gridCheck">
-                Check me out
-              </label>
-            </div>
-          </div>
-          <button type="submit" class="btn btn-primary">
-            Sign in
-          </button>
-        </form>
+        <h1 className="text-center">Store Info</h1>
+        <br />
+        {isLoading ? (
+          <>Loading...</>
+        ) : (
+          <>
+            <form>
+              <div className="form-group">
+                <label htmlFor="store">Store</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="store"
+                  value={data.title}
+                  readOnly
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="address">Address</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="address"
+                  value={data.street}
+                  readOnly
+                />
+              </div>
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <label htmlFor="city">City</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="city"
+                    value={data.city}
+                    readOnly
+                  />
+                </div>
+                <div className="form-group col-md-6">
+                  <label htmlFor="region">Region</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="region"
+                    value={data.region}
+                    readOnly
+                  />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-group col-md-2">
+                  <label htmlFor="zip">Zip</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="zip"
+                    value={data.postcode}
+                    readOnly
+                  />
+                </div>
+                <div className="form-group col-md-5">
+                  <label htmlFor="phone">Phone</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="phone"
+                    value={data.phone}
+                    readOnly
+                  />
+                </div>
+                <div className="form-group col-md-5">
+                  <label htmlFor="country">Country</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="country"
+                    value={data.country}
+                    readOnly
+                  />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-group col-md-2">
+                  <label htmlFor="tax">Tax (%)</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="tax"
+                    value={data.tax}
+                    readOnly
+                  />
+                </div>
+                <div className="form-group col-md-2">
+                  <label htmlFor="currency">Currency</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="currency"
+                    value={data.currency}
+                    readOnly
+                  />
+                </div>
+              </div>
+            </form>
+          </>
+        )}
       </div>
     </div>
   );

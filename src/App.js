@@ -21,6 +21,8 @@ import CategoryEdit from "./components/CategoryEdit";
 import CategoryNew from "./components/CategoryNew";
 import ProductEdit from "./components/ProductEdit";
 import ProductNew from "./components/ProductNew";
+import ProfileEdit from "./components/ProfileEdit";
+import UserEdit from "./components/UserEdit";
 
 const App = () => {
   return (
@@ -43,6 +45,8 @@ const App = () => {
             <Route exact path="/category_new" component={CategoryNew} />
             <Route exact path="/product_edit" component={ProductEdit} />
             <Route exact path="/product_new" component={ProductNew} />
+            <Route exact path="/profile_edit" component={ProfileEdit} />
+            <Route exact path="/user_edit" component={UserEdit} />
           </div>
         </div>
       </div>

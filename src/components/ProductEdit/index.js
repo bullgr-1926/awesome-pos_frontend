@@ -124,10 +124,10 @@ const ProductEdit = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container fadeIn">
       <div className="row">
         <div className="col-md-6 mt-5 mx-auto">
-          <form noValidate onSubmit={onSubmit}>
+          <form onSubmit={onSubmit}>
             <h1 className="h3 mb-3 font-weight-normal">
               Please edit or delete the selected product
             </h1>
@@ -141,6 +141,7 @@ const ProductEdit = () => {
                 value={data.title}
                 required
                 onChange={onChange}
+                maxLength="20"
               />
             </div>
             <div className="form-group">
@@ -153,6 +154,7 @@ const ProductEdit = () => {
                 value={data.description}
                 required
                 onChange={onChange}
+                maxLength="30"
               />
             </div>
             <div className="form-group">

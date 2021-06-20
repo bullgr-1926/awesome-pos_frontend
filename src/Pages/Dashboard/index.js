@@ -2,9 +2,9 @@ import "./index.css";
 
 const Dashboard = () => {
   return (
-    <div className="container">
+    <div className="container fadeIn">
       <div className="col-md-6 mt-5 mx-auto">
-        <h1 className="text-center">Dashboard Page</h1>
+        <h1 className="text-center fadeIn">Dashboard Page</h1>
       </div>
     </div>
   );

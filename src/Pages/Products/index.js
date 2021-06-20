@@ -223,7 +223,7 @@ const Products = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container fadeIn">
       <br />
       <h1 className="text-center">Products</h1>
       <br />
@@ -255,65 +255,67 @@ const Products = () => {
       {isLoading ? (
         <>Loading...</>
       ) : (
-        <table className="table table-striped table-hover">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Title</th>
-              <th scope="col">Descr.</th>
-              <th scope="col">Categ.</th>
-              <th scope="col">Price</th>
-              <th scope="col">Barcode</th>
-              <th scope="col">Disc. (%)</th>
-              <th scope="col">Disc. Exp.</th>
-              <th scope="col">Edit</th>
-            </tr>
-          </thead>
-          <tbody>
-            {pageData.map((item, index) => (
-              <tr key={index}>
-                <th scope="col">{actualPage * itemsPerPage + (index + 1)}</th>
-                <td>{item.title}</td>
-                <td>{item.description}</td>
-                <td>{item.category}</td>
-                <td>{item.price}</td>
-                <td>{item.barcode}</td>
-                <td>{item.discount}</td>
-                <td>{item.discountExpiration}</td>
-                <td>
-                  <button className="btn" type="button">
-                    <i
-                      className="bi bi-pencil"
-                      onClick={handleEditClick}
-                      id={index}
-                    ></i>
-                  </button>
-                </td>
+        <>
+          <table className="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Descr.</th>
+                <th scope="col">Categ.</th>
+                <th scope="col">Price</th>
+                <th scope="col">Barcode</th>
+                <th scope="col">Disc. (%)</th>
+                <th scope="col">Disc. Exp.</th>
+                <th scope="col">Edit</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {pageData.map((item, index) => (
+                <tr key={index}>
+                  <th scope="col">{actualPage * itemsPerPage + (index + 1)}</th>
+                  <td>{item.title}</td>
+                  <td>{item.description}</td>
+                  <td>{item.category}</td>
+                  <td>{item.price}</td>
+                  <td>{item.barcode}</td>
+                  <td>{item.discount}</td>
+                  <td>{item.discountExpiration}</td>
+                  <td>
+                    <button className="btn" type="button">
+                      <i
+                        className="bi bi-pencil"
+                        onClick={handleEditClick}
+                        id={index}
+                      ></i>
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <br />
+          <button
+            className="btn btn-dark"
+            type="button"
+            onClick={handlePrevClick}
+            disabled={prevDisable}
+          >
+            <i className="bi bi-arrow-left-square-fill"></i> Prev
+          </button>
+          {"  "}
+          <button
+            className="btn btn-dark"
+            type="button"
+            onClick={handleNextClick}
+            disabled={nextDisable}
+          >
+            Next <i className="bi bi-arrow-right-square-fill"></i>
+          </button>
+          <br />
+          <br />
+        </>
       )}
-      <br />
-      <button
-        className="btn btn-dark"
-        type="button"
-        onClick={handlePrevClick}
-        disabled={prevDisable}
-      >
-        <i className="bi bi-arrow-left-square-fill"></i> Prev
-      </button>
-      {"  "}
-      <button
-        className="btn btn-dark"
-        type="button"
-        onClick={handleNextClick}
-        disabled={nextDisable}
-      >
-        Next <i className="bi bi-arrow-right-square-fill"></i>
-      </button>
-      <br />
-      <br />
     </div>
   );
 };

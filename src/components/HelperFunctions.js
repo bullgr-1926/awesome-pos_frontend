@@ -172,6 +172,27 @@ export const productDelete = async (id) => {
 };
 
 //
+// Update the user profile
+//
+export const profileUpdate = async (id, profileToEdit) => {
+  try {
+    const response = await axios.put(
+      `${apiUrl}user/update/${id}`,
+      profileToEdit,
+      {
+        headers: {
+          "auth-token": localStorage.usertoken,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error.response.data);
+    alert(error.response.data);
+  }
+};
+
+//
 // Return the decoded token (if any)
 //
 export const getToken = () => {
