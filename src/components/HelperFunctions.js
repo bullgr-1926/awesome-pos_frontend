@@ -9,10 +9,12 @@ export const apiUrl = `http://localhost:3002/`;
 //
 export const register = async (newUser) => {
   try {
-    const response = await axios.post(`${apiUrl}user/register`, newUser);
-    if (response) {
-      console.log("Registered");
-    }
+    const response = await axios.post(`${apiUrl}user/register`, newUser, {
+      headers: {
+        "auth-token": localStorage.usertoken,
+      },
+    });
+    return response.data;
   } catch (error) {
     console.error(error.response.data);
     alert(error.response.data);
@@ -25,10 +27,8 @@ export const register = async (newUser) => {
 export const login = async (user) => {
   try {
     const response = await axios.post(`${apiUrl}user/login`, user);
-    // Save the token to localStorage
-    localStorage.setItem("usertoken", response.data);
-    // Save the user role to localStorage
-    setUserRole();
+    // Set the token in localStorage
+    setOrRefreshToken(response.data);
     return response.data;
   } catch (error) {
     console.error(error.response.data);
@@ -185,6 +185,42 @@ export const profileUpdate = async (id, profileToEdit) => {
         },
       }
     );
+    // Refresh the token in localStorage
+    setOrRefreshToken(response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error.response.data);
+    alert(error.response.data);
+  }
+};
+
+//
+// Delete the user profile
+//
+export const profileDelete = async (id) => {
+  try {
+    const response = await axios.delete(`${apiUrl}user/delete_profile/${id}`, {
+      headers: {
+        "auth-token": localStorage.usertoken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error.response.data);
+    alert(error.response.data);
+  }
+};
+
+//
+// Delete a user profile
+//
+export const userDelete = async (id) => {
+  try {
+    const response = await axios.delete(`${apiUrl}user/delete_user/${id}`, {
+      headers: {
+        "auth-token": localStorage.usertoken,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error(error.response.data);
@@ -207,6 +243,22 @@ export const getToken = () => {
 export const setUserRole = () => {
   const userRole = getToken();
   localStorage.setItem("userrole", userRole.user.role);
+};
+
+//
+// Set or Refresh the token and user role into localStorage
+//
+export const setOrRefreshToken = (token) => {
+  // Remove token and user role if any
+  if (localStorage.usertoken) {
+    localStorage.removeItem("usertoken");
+    localStorage.removeItem("userrole");
+  }
+
+  // Save the token to localStorage
+  localStorage.setItem("usertoken", token);
+  // Save the user role to localStorage
+  setUserRole();
 };
 
 // User roles in database

@@ -59,7 +59,7 @@ const CategoryNew = () => {
         <div className="col-md-6 mt-5 mx-auto">
           <form onSubmit={onSubmit}>
             <h1 className="h3 mb-3 font-weight-normal">
-              Please edit or delete the selected category
+              Create a new category
             </h1>
             <div className="form-group">
               <label htmlFor="title">Title</label>
@@ -87,38 +87,40 @@ const CategoryNew = () => {
                 maxLength="30"
               />
             </div>
-            <div className="form-group">
-              <label htmlFor="color">Color</label>
-              <input
-                type="color"
-                className="form-control form-control-color"
-                name="color"
-                value={data.color}
-                required
-                onChange={onChange}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="discount">Discount (%)</label>
-              <input
-                type="number"
-                className="form-control"
-                name="discount"
-                value={data.discount}
-                required
-                min="0"
-                max="100"
-                onChange={onChange}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="discountExpiration">Discount Expiration</label>{" "}
-              <DatePicker
-                name="discountExpiration"
-                value={data.discountExpiration}
-                selected={startDate}
-                onChange={(date) => onDateChange(date)}
-              />
+            <div className="form-row">
+              <div className="form-group col-md-2">
+                <label htmlFor="color">Color</label>
+                <input
+                  type="color"
+                  className="form-control form-control-color"
+                  name="color"
+                  value={data.color}
+                  required
+                  onChange={onChange}
+                />
+              </div>
+              <div className="form-group col-md-3">
+                <label htmlFor="discount">Discount (%)</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  name="discount"
+                  value={data.discount}
+                  required
+                  min="0"
+                  max="100"
+                  onChange={onChange}
+                />
+              </div>
+              <div className="form-group col-md-7">
+                <label htmlFor="discountExpiration">Discount Expiration</label>{" "}
+                <DatePicker
+                  name="discountExpiration"
+                  value={data.discountExpiration}
+                  selected={startDate}
+                  onChange={(date) => onDateChange(date)}
+                />
+              </div>
             </div>
             <button
               type="submit"

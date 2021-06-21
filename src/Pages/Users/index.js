@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { apiUrl } from "../../components/HelperFunctions";
+import { apiUrl, userRoles } from "../../components/HelperFunctions";
 import axios from "axios";
 import "./index.css";
 
@@ -13,7 +13,7 @@ const Users = () => {
   // Fetch the data on the beginning
   //
   useEffect(() => {
-    // Get all categories
+    // Get all users
     const fetchAllData = async () => {
       try {
         setIsLoading(true);
@@ -50,7 +50,7 @@ const Users = () => {
         className="btn btn-dark button-right"
         type="button"
         onClick={() => {
-          history.push("/category_new");
+          history.push("/user_new");
         }}
       >
         New
@@ -70,7 +70,7 @@ const Users = () => {
                 <th scope="col">Username</th>
                 <th scope="col">Email</th>
                 <th scope="col">Role</th>
-                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -83,13 +83,15 @@ const Users = () => {
                   <td>{item.email}</td>
                   <td>{item.role}</td>
                   <td>
-                    <button className="btn" type="button">
-                      <i
-                        className="bi bi-pencil"
-                        onClick={handleEditClick}
-                        id={index}
-                      ></i>
-                    </button>
+                    {item.role === userRoles[1] && (
+                      <button className="btn" type="button">
+                        <i
+                          className="bi bi-trash"
+                          onClick={handleEditClick}
+                          id={index}
+                        ></i>
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))}

@@ -1,11 +1,10 @@
-import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import {
   productUpdate,
   productDelete,
   apiUrl,
 } from "../../components/HelperFunctions";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import queryString from "query-string";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -166,51 +165,55 @@ const ProductEdit = () => {
                 placeholder="Select a category"
               />
             </div>
-            <div className="form-group">
-              <label htmlFor="price">Price</label>
-              <input
-                type="number"
-                className="form-control"
-                name="price"
-                value={data.price}
-                required
-                min="0"
-                onChange={onChange}
-              />
+            <div className="form-row">
+              <div className="form-group col-md-4">
+                <label htmlFor="price">Price</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  name="price"
+                  value={data.price}
+                  required
+                  min="0"
+                  onChange={onChange}
+                />
+              </div>
+              <div className="form-group col-md-8">
+                <label htmlFor="barcode">Barcode</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="barcode"
+                  placeholder="Enter barcode"
+                  value={data.barcode}
+                  required
+                  onChange={onChange}
+                />
+              </div>
             </div>
-            <div className="form-group">
-              <label htmlFor="barcode">Barcode</label>
-              <input
-                type="text"
-                className="form-control"
-                name="barcode"
-                placeholder="Enter barcode"
-                value={data.barcode}
-                required
-                onChange={onChange}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="discount">Discount (%)</label>
-              <input
-                type="number"
-                className="form-control"
-                name="discount"
-                value={data.discount}
-                required
-                min="0"
-                max="100"
-                onChange={onChange}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="discountExpiration">Discount Expiration</label>{" "}
-              <DatePicker
-                name="discountExpiration"
-                value={data.discountExpiration}
-                selected={startDate}
-                onChange={(date) => onDateChange(date)}
-              />
+            <div className="form-row">
+              <div className="form-group col-md-4">
+                <label htmlFor="discount">Discount (%)</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  name="discount"
+                  value={data.discount}
+                  required
+                  min="0"
+                  max="100"
+                  onChange={onChange}
+                />
+              </div>
+              <div className="form-group col-md-6">
+                <label htmlFor="discountExpiration">Discount Expiration</label>{" "}
+                <DatePicker
+                  name="discountExpiration"
+                  value={data.discountExpiration}
+                  selected={startDate}
+                  onChange={(date) => onDateChange(date)}
+                />
+              </div>
             </div>
             <div className="form-group">
               <label htmlFor="delete" style={{ color: "red" }}>

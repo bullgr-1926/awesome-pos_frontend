@@ -1,28 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { getToken, profileUpdate } from "../../components/HelperFunctions";
+import {
+  getToken,
+  profileUpdate,
+  profileDelete,
+} from "../../components/HelperFunctions";
 import queryString from "query-string";
 
 const ProfileEdit = () => {
   let history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
+  const [deleteProfile, setDeleteProfile] = useState("");
 
+  // States for the two password fields to check
+  // if the user enters the same password
   const [newPassword, setNewPassword] = useState({
     firstNewPassword: "",
     secondNewPassword: "",
   });
 
-  // Keep the actual profile to check if
-  // we need to submit.
   const [profile, setProfile] = useState({
-    username: "",
-    email: "",
-    firstname: "",
-    lastname: "",
-    role: "",
-  });
-
-  const [newProfile, setNewProfile] = useState({
     id: "",
     username: "",
     email: "",
@@ -41,14 +38,6 @@ const ProfileEdit = () => {
     const decoded = getToken();
 
     setProfile({
-      username: decoded.user.username,
-      email: decoded.user.email,
-      firstname: decoded.user.firstname,
-      lastname: decoded.user.lastname,
-      role: decoded.user.role,
-    });
-
-    setNewProfile({
       id: decoded.user._id,
       username: decoded.user.username,
       email: decoded.user.email,
@@ -66,7 +55,7 @@ const ProfileEdit = () => {
   const onChange = (e) => {
     let keyName = e.target.name;
     let value = e.target.value;
-    setNewProfile((previous) => {
+    setProfile((previous) => {
       return {
         ...previous,
         [keyName]: value,
@@ -89,75 +78,65 @@ const ProfileEdit = () => {
   };
 
   //
+  // Change the delete field
+  //
+  const onChangeDelete = (e) => {
+    let value = e.target.value;
+    setDeleteProfile(value);
+  };
+
+  //
+  // Remove token and user role in local storage
+  // and redirect to home (logout).
+  const logOut = () => {
+    localStorage.removeItem("usertoken");
+    localStorage.removeItem("userrole");
+    history.push(`/`);
+  };
+
+  //
   // Submit the changes
   //
   const onSubmit = (e) => {
     e.preventDefault();
 
-    // Boolean to check if the user should logout
-    // (only if something changes) and login
-    // to refresh the token.
-    let userLogout = false;
-
     // Boolean to check if the data are correct to submit
     let submitData = true;
 
-    //Check if the user entered a new password
-    if (newPassword.firstNewPassword) {
-      // Check if both password fields match...
-      if (newPassword.firstNewPassword === newPassword.secondNewPassword) {
-        // ...if yes, set the new password to the password object field
-        // and set the logout boolean to true.
-        newProfile.password = newPassword.firstNewPassword;
-        userLogout = true;
-      } else {
-        // Else the submit fails
-        alert("The password fields do not match");
-        submitData = false;
+    // Check if user choose to delete
+    if (deleteProfile === "DELETE") {
+      profileDelete(profile.id).then((res) => {
+        if (res) {
+          logOut();
+        }
+      });
+    } else {
+      // Else continue with the submit process.
+      //Check if the user entered a new password
+      if (newPassword.firstNewPassword) {
+        // Check if both password fields match...
+        if (newPassword.firstNewPassword === newPassword.secondNewPassword) {
+          // ...if yes, set the new password to the password object field
+          // and set the logout boolean to true.
+          profile.password = newPassword.firstNewPassword;
+        } else {
+          // Else the submit fails
+          alert("The password fields do not match");
+          submitData = false;
+        }
       }
-    }
 
-    // Check if the user changes any field to set the boolean logout to true
-    if (newProfile.username !== profile.username) {
-      userLogout = true;
-    }
-    if (newProfile.email !== profile.email) {
-      userLogout = true;
-    }
-    if (newProfile.firstname !== profile.firstname) {
-      userLogout = true;
-    }
-    if (newProfile.lastname !== profile.lastname) {
-      userLogout = true;
-    }
-
-    // If submit boolean is true, submit the data
-    if (submitData) {
-      profileUpdate(newProfile.id, queryString.stringify(newProfile)).then(
-        (res) => {
-          if (res) {
-            // Check if the user must logout
-            if (userLogout) {
-              alert("User profile updated successfully. You must login again.");
-              logOut();
-            } else {
-              // Else redirect to user profile
+      // If submit boolean is true, submit the data
+      if (submitData) {
+        profileUpdate(profile.id, queryString.stringify(profile)).then(
+          (res) => {
+            if (res) {
               history.push("/profile");
             }
           }
-        }
-      );
+        );
+      }
     }
-  };
-
-  //
-  // Delete the token and role variables
-  // from local storage and logout.
-  //
-  const logOut = () => {
-    localStorage.removeItem("usertoken");
-    localStorage.removeItem("userrole");
-    history.push(`/`);
   };
 
   return (
@@ -177,7 +156,7 @@ const ProfileEdit = () => {
                   className="form-control"
                   name="username"
                   placeholder="Enter username"
-                  value={newProfile.username}
+                  value={profile.username}
                   required
                   onChange={onChange}
                   minLength="8"
@@ -191,7 +170,7 @@ const ProfileEdit = () => {
                   className="form-control"
                   name="email"
                   placeholder="Enter email"
-                  value={newProfile.email}
+                  value={profile.email}
                   required
                   onChange={onChange}
                 />
@@ -231,7 +210,7 @@ const ProfileEdit = () => {
                     className="form-control"
                     name="firstname"
                     placeholder="Enter firstname"
-                    value={newProfile.firstname}
+                    value={profile.firstname}
                     required
                     onChange={onChange}
                     maxLength="30"
@@ -244,12 +223,25 @@ const ProfileEdit = () => {
                     className="form-control"
                     name="lastname"
                     placeholder="Enter lastname"
-                    value={newProfile.lastname}
+                    value={profile.lastname}
                     required
                     onChange={onChange}
                     maxLength="30"
                   />
                 </div>
+              </div>
+              <div className="form-group">
+                <label htmlFor="delete" style={{ color: "red" }}>
+                  Delete
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="delete"
+                  placeholder="Enter DELETE to delete the user profile"
+                  value={deleteProfile}
+                  onChange={onChangeDelete}
+                />
               </div>
               <button
                 type="submit"

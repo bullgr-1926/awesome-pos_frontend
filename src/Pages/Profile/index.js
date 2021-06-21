@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { getToken } from "../../components/HelperFunctions";
 
 const Profile = () => {
-  const history = useHistory();
+  let history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
   const [profile, setProfile] = useState({
     username: "",

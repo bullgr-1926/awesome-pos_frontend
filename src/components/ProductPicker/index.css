@@ -1,0 +1,10 @@
+.product-card {
+  width: 5rem;
+  height: 5rem;
+  margin: 5px;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+}

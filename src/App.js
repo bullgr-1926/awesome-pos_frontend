@@ -23,6 +23,7 @@ import ProductEdit from "./components/ProductEdit";
 import ProductNew from "./components/ProductNew";
 import ProfileEdit from "./components/ProfileEdit";
 import UserEdit from "./components/UserEdit";
+import UserNew from "./components/UserNew";
 
 const App = () => {
   return (
@@ -47,6 +48,7 @@ const App = () => {
             <Route exact path="/product_new" component={ProductNew} />
             <Route exact path="/profile_edit" component={ProfileEdit} />
             <Route exact path="/user_edit" component={UserEdit} />
+            <Route exact path="/user_new" component={UserNew} />
           </div>
         </div>
       </div>

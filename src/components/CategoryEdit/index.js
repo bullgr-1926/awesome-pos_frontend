@@ -1,10 +1,9 @@
-import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import {
   categoryUpdate,
   categoryDelete,
 } from "../../components/HelperFunctions";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import queryString from "query-string";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -74,7 +73,7 @@ const CategoryEdit = () => {
     });
   };
 
-  // Change the correspond object field
+  // Change the delete field
   const onChangeDelete = (e) => {
     let value = e.target.value;
     setDeleteCategory(value);
@@ -114,38 +113,40 @@ const CategoryEdit = () => {
                 maxLength="30"
               />
             </div>
-            <div className="form-group">
-              <label htmlFor="color">Color</label>
-              <input
-                type="color"
-                className="form-control form-control-color"
-                name="color"
-                value={data.color}
-                required
-                onChange={onChange}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="discount">Discount (%)</label>
-              <input
-                type="number"
-                className="form-control"
-                name="discount"
-                value={data.discount}
-                required
-                min="0"
-                max="100"
-                onChange={onChange}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="discountExpiration">Discount Expiration</label>{" "}
-              <DatePicker
-                name="discountExpiration"
-                value={data.discountExpiration}
-                selected={startDate}
-                onChange={(date) => onDateChange(date)}
-              />
+            <div className="form-row">
+              <div className="form-group col-md-2">
+                <label htmlFor="color">Color</label>
+                <input
+                  type="color"
+                  className="form-control form-control-color"
+                  name="color"
+                  value={data.color}
+                  required
+                  onChange={onChange}
+                />
+              </div>
+              <div className="form-group col-md-3">
+                <label htmlFor="discount">Discount (%)</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  name="discount"
+                  value={data.discount}
+                  required
+                  min="0"
+                  max="100"
+                  onChange={onChange}
+                />
+              </div>
+              <div className="form-group col-md-7">
+                <label htmlFor="discountExpiration">Discount Expiration</label>{" "}
+                <DatePicker
+                  name="discountExpiration"
+                  value={data.discountExpiration}
+                  selected={startDate}
+                  onChange={(date) => onDateChange(date)}
+                />
+              </div>
             </div>
             <div className="form-group">
               <label htmlFor="delete" style={{ color: "red" }}>
