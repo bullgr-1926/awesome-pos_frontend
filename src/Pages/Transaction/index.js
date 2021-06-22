@@ -2,6 +2,10 @@ import ProductPicker from "../../components/ProductPicker";
 import "./index.css";
 
 const Transaction = () => {
+  const handlePickProduct = (pickedProduct) => {
+    console.log(pickedProduct);
+  };
+
   return (
     <div className="container fadeIn">
       <div className="row justify-content-center">
@@ -9,7 +13,7 @@ const Transaction = () => {
       </div>
       <div className="row justify-content-center">
         <div className="col-md-6">
-          <ProductPicker />
+          <ProductPicker handlePickProduct={handlePickProduct} />
         </div>
         <div className="col-md-6" style={{ backgroundColor: "blue" }}>
           Transaction Page Transaction Page Transaction Page Transaction Page

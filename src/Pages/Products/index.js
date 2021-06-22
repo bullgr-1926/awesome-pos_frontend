@@ -113,7 +113,7 @@ const Products = () => {
     setPages(pages);
 
     // If we have more than one page, enable the next button
-    if (pages > 1) {
+    if (pages > 0) {
       setNextDisable(false);
     }
 
@@ -277,7 +277,7 @@ const Products = () => {
                   <td>{item.title}</td>
                   <td>{item.description}</td>
                   <td>{item.category}</td>
-                  <td>{item.price}</td>
+                  <td>{item.price.toFixed(2)}</td>
                   <td>{item.barcode}</td>
                   <td>{item.discount}</td>
                   <td>{item.discountExpiration}</td>

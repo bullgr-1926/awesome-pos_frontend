@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import { apiUrl, productsByCategory } from "../../components/HelperFunctions";
 import axios from "axios";
 import "./index.css";
@@ -7,7 +6,7 @@ import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import queryString from "query-string";
 
-const ProductPicker = () => {
+const ProductPicker = (props) => {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   const [categories, setCategories] = useState([]);
@@ -19,7 +18,7 @@ const ProductPicker = () => {
   const [prevDisable, setPrevDisable] = useState(true);
   const [nextDisable, setNextDisable] = useState(true);
   const [pageData, setPageData] = useState([]);
-  const itemsPerPage = 10;
+  const itemsPerPage = 15;
 
   //
   // Fetch the data on the beginning and on every search
@@ -120,7 +119,7 @@ const ProductPicker = () => {
     setPages(pages);
 
     // If we have more than one page, enable the next button
-    if (pages > 1) {
+    if (pages > 0) {
       setNextDisable(false);
     }
 
@@ -140,6 +139,14 @@ const ProductPicker = () => {
     setPageData([...rows]);
     setIsLoading(false);
   }, [data]);
+
+  //
+  // Send the correspond id data back to container
+  //
+  const handleProductClick = (e) => {
+    const pickedProduct = data[e.target.id];
+    props.handlePickProduct(pickedProduct);
+  };
 
   //
   // Change the category from dropdown
@@ -249,11 +256,10 @@ const ProductPicker = () => {
                 className="product-card"
                 key={index}
                 id={index}
+                onClick={handleProductClick}
                 style={{ backgroundColor: categoryColors[item.category] }}
               >
-                <div className="card-body">
-                  <h6 className="card-title text-center">{item.title}</h6>
-                </div>
+                {item.title}
               </div>
             ))}
           </div>
