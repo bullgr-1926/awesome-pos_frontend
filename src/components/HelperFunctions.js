@@ -117,6 +117,26 @@ export const productsByCategory = async (categoryToSearch) => {
 };
 
 //
+// Get the product by barcode
+//
+export const productByBarcode = async (barcodeToSearch) => {
+  try {
+    const response = await axios.get(
+      `${apiUrl}products/barcode/${barcodeToSearch}`,
+      {
+        headers: {
+          "auth-token": localStorage.usertoken,
+        },
+      }
+    );
+    return response.data.getProduct;
+  } catch (error) {
+    console.error(error.response.data);
+    alert(error.response.data);
+  }
+};
+
+//
 // Create a new product item
 //
 export const productCreate = async (productToCreate) => {

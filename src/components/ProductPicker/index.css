@@ -27,3 +27,7 @@
   display: flex;
   flex-wrap: wrap;
 }
+
+.pagination-button {
+  margin: 5px;
+}

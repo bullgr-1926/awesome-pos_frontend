@@ -202,7 +202,7 @@ const Categories = () => {
       <br />
       <br />
       {isLoading ? (
-        <>Loading...</>
+        <></>
       ) : (
         <>
           <table className="table table-striped table-hover">
@@ -219,7 +219,7 @@ const Categories = () => {
             </thead>
             <tbody>
               {pageData.map((item, index) => (
-                <tr key={index}>
+                <tr key={index} className="fadeIn">
                   <th scope="col">{index + 1}</th>
                   <td>{item.title}</td>
                   <td>{item.description}</td>
@@ -245,16 +245,15 @@ const Categories = () => {
           </table>
           <br />
           <button
-            className="btn btn-dark"
+            className="btn btn-dark pagination-button"
             type="button"
             onClick={handlePrevClick}
             disabled={prevDisable}
           >
             <i className="bi bi-arrow-left-square-fill"></i> Prev
           </button>
-          {"  "}
           <button
-            className="btn btn-dark"
+            className="btn btn-dark pagination-button"
             type="button"
             onClick={handleNextClick}
             disabled={nextDisable}

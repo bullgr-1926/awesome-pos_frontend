@@ -253,7 +253,7 @@ const Products = () => {
       <br />
       <br />
       {isLoading ? (
-        <>Loading...</>
+        <></>
       ) : (
         <>
           <table className="table table-striped table-hover">
@@ -272,7 +272,7 @@ const Products = () => {
             </thead>
             <tbody>
               {pageData.map((item, index) => (
-                <tr key={index}>
+                <tr key={index} className="fadeIn">
                   <th scope="col">{actualPage * itemsPerPage + (index + 1)}</th>
                   <td>{item.title}</td>
                   <td>{item.description}</td>
@@ -296,7 +296,7 @@ const Products = () => {
           </table>
           <br />
           <button
-            className="btn btn-dark"
+            className="btn btn-dark pagination-button"
             type="button"
             onClick={handlePrevClick}
             disabled={prevDisable}
@@ -305,7 +305,7 @@ const Products = () => {
           </button>
           {"  "}
           <button
-            className="btn btn-dark"
+            className="btn btn-dark pagination-button"
             type="button"
             onClick={handleNextClick}
             disabled={nextDisable}

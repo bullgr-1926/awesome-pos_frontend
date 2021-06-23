@@ -247,10 +247,10 @@ const ProductPicker = (props) => {
       />
       <br />
       {isLoading ? (
-        <>Loading...</>
+        <></>
       ) : (
         <>
-          <div className="flex-container">
+          <div className="flex-container fadeIn">
             {pageData.map((item, index) => (
               <div
                 className="product-card"
@@ -266,7 +266,7 @@ const ProductPicker = (props) => {
 
           <br />
           <button
-            className="btn btn-dark"
+            className="btn btn-dark pagination-button"
             type="button"
             onClick={handlePrevClick}
             disabled={prevDisable}
@@ -275,7 +275,7 @@ const ProductPicker = (props) => {
           </button>
           {"  "}
           <button
-            className="btn btn-dark"
+            className="btn btn-dark pagination-button"
             type="button"
             onClick={handleNextClick}
             disabled={nextDisable}
