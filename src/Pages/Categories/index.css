@@ -30,3 +30,8 @@
 .pagination-button {
   margin: 5px;
 }
+
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}

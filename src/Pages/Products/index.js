@@ -241,7 +241,7 @@ const Products = () => {
           history.push("/product_new");
         }}
       >
-        New
+        <i className="bi bi-plus-lg"></i> New
       </button>
       <br />
       <br />
@@ -265,7 +265,7 @@ const Products = () => {
                 <th scope="col">Categ.</th>
                 <th scope="col">Price</th>
                 <th scope="col">Barcode</th>
-                <th scope="col">Disc. (%)</th>
+                <th scope="col">Disc.</th>
                 <th scope="col">Disc. Exp.</th>
                 <th scope="col">Edit</th>
               </tr>
@@ -277,9 +277,9 @@ const Products = () => {
                   <td>{item.title}</td>
                   <td>{item.description}</td>
                   <td>{item.category}</td>
-                  <td>{item.price.toFixed(2)}</td>
+                  <td>{"€" + item.price.toFixed(2)}</td>
                   <td>{item.barcode}</td>
-                  <td>{item.discount}</td>
+                  <td>{item.discount + "%"}</td>
                   <td>{item.discountExpiration}</td>
                   <td>
                     <button className="btn" type="button">

@@ -51,7 +51,7 @@ const BarcodePicker = (props) => {
             type="text"
             className="form-control"
             value={barcode}
-            placeholder="Please use the barcode scanner"
+            placeholder="Please use barcode scanner"
             onChange={onChange}
             autoFocus
             aria-label="Large"

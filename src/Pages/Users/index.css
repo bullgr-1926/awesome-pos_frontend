@@ -22,3 +22,8 @@
     opacity: 1;
   }
 }
+
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}

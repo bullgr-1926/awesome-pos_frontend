@@ -197,7 +197,7 @@ const Categories = () => {
           history.push("/category_new");
         }}
       >
-        New
+        <i className="bi bi-plus-lg"></i> New
       </button>
       <br />
       <br />
@@ -212,7 +212,7 @@ const Categories = () => {
                 <th scope="col">Title</th>
                 <th scope="col">Descr.</th>
                 <th scope="col">Color</th>
-                <th scope="col">Disc. (%)</th>
+                <th scope="col">Disc.</th>
                 <th scope="col">Disc. Exp.</th>
                 <th scope="col">Edit</th>
               </tr>
@@ -228,7 +228,7 @@ const Categories = () => {
                       <i className="bi bi-circle-fill"></i>
                     </span>
                   </td>
-                  <td>{item.discount}</td>
+                  <td>{item.discount + "%"}</td>
                   <td>{item.discountExpiration}</td>
                   <td>
                     <button className="btn" type="button">

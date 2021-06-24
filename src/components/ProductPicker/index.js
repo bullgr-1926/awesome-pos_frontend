@@ -18,7 +18,7 @@ const ProductPicker = (props) => {
   const [prevDisable, setPrevDisable] = useState(true);
   const [nextDisable, setNextDisable] = useState(true);
   const [pageData, setPageData] = useState([]);
-  const itemsPerPage = 15;
+  const itemsPerPage = 12;
 
   //
   // Fetch the data on the beginning and on every search
@@ -263,7 +263,6 @@ const ProductPicker = (props) => {
               </div>
             ))}
           </div>
-
           <br />
           <button
             className="btn btn-dark pagination-button"

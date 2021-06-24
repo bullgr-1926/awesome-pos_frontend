@@ -26,3 +26,32 @@
 .toggle-button {
   margin: 15px;
 }
+
+.receipt {
+  font-size: 15px;
+}
+
+.bi {
+  font-size: 15px;
+}
+
+.line {
+  position: relative;
+}
+.line:after {
+  content: "";
+  position: absolute;
+  left: 40%;
+  border-left: 1px solid black;
+  top: 4px;
+  bottom: 10%;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.transaction-button {
+  margin: 10px;
+}

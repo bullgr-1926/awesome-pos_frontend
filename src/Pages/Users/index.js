@@ -53,7 +53,7 @@ const Users = () => {
           history.push("/user_new");
         }}
       >
-        New
+        <i className="bi bi-person-plus-fill"></i> New
       </button>
       <br />
       <br />
