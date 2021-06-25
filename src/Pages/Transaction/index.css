@@ -42,7 +42,7 @@
   content: "";
   position: absolute;
   left: 40%;
-  border-left: 1px solid black;
+  border-left: 1px solid LightGray;
   top: 4px;
   bottom: 10%;
 }
@@ -54,4 +54,11 @@
 
 .transaction-button {
   margin: 10px;
+}
+
+hr {
+  width: 43%;
+  text-align: right;
+  margin-right: 0;
+  border-color: LightGray;
 }

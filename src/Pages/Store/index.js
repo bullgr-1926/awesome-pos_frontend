@@ -8,10 +8,10 @@ const Store = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   //
-  // Fetch the data on the beginning and on every search
+  // Fetch the data on the beginning
   //
   useEffect(() => {
-    // Get all categories
+    // Get all store data
     const fetchAllData = async () => {
       try {
         setIsLoading(true);

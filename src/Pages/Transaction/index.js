@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { apiUrl } from "../../components/HelperFunctions";
+import axios from "axios";
 import ProductPicker from "../../components/ProductPicker";
 import BarcodePicker from "../../components/BarcodePicker";
 import "./index.css";
@@ -6,7 +8,72 @@ import "./index.css";
 const Transaction = () => {
   const [toggleBarcode, setToggleBarcode] = useState(true);
   const [products, setProducts] = useState([]);
+  const [storeData, setStoreData] = useState([]);
   const [transButtons, setTransButtons] = useState(true);
+  const [categoryDiscount, setCategoryDiscount] = useState([]);
+  const [checkoutValues, setCheckoutValues] = useState({
+    subtotal: 0,
+    tax: 0,
+    grandtotal: 0,
+  });
+
+  //
+  // Fetch all categories and get the titles
+  // and the discount to calculate the product price.
+  //
+  useEffect(() => {
+    // Get all categories
+    const fetchAllCategories = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}categories/`, {
+          headers: {
+            "auth-token": localStorage.usertoken,
+          },
+        });
+        // Set only the titles and discount
+        // of the categories to the array.
+        response.data.allCategories.forEach((element) => {
+          const categoryDiscountItem = {
+            title: element.title,
+            discount: element.discount,
+            discountExpiration: element.discountExpiration,
+          };
+          setCategoryDiscount((previous) => {
+            return [...previous, categoryDiscountItem];
+          });
+        });
+      } catch (error) {
+        console.error(error.response.data);
+        alert(error.response.data);
+      }
+    };
+
+    // Get all store data
+    const fetchStoreData = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}store/`, {
+          headers: {
+            "auth-token": localStorage.usertoken,
+          },
+        });
+        // Set only the first array entry
+        setStoreData(response.data.store[0]);
+      } catch (error) {
+        console.error(error.response.data);
+        alert(error.response.data);
+      }
+    };
+
+    // Fetch all categories if not already fetched
+    if (categoryDiscount.length === 0) {
+      fetchAllCategories();
+    }
+
+    // Fetch all store data if not already fetched
+    if (storeData.length === 0) {
+      fetchStoreData();
+    }
+  }, [categoryDiscount, storeData]);
 
   //
   // Set new product in products array.
@@ -37,10 +104,20 @@ const Transaction = () => {
         discountExpiration: pickedProduct.discountExpiration,
       };
 
+      // ...calculate the price using the discount values and
+      // assing the result to both price and total price fields
+      // and also the final discount value on discount field...
+      const { price, discount } = calculatePrice(newProduct);
+      newProduct.totalPrice = newProduct.price = price;
+      newProduct.discount = discount;
+
       // ...and set it to the array
       setProducts((previous) => {
         return [...previous, newProduct];
       });
+
+      // Update the checkout values
+      calculateCheckout();
     }
 
     //Activate the transaction buttons
@@ -93,6 +170,7 @@ const Transaction = () => {
     const newArray = [...products];
     newArray.splice(indexOfItem, 1);
     setProducts(newArray);
+    calculateCheckout();
 
     // Check if there is any product in cart.
     // If not, disable the transaction buttons.
@@ -114,6 +192,69 @@ const Transaction = () => {
     newArray[index].totalPrice = amount * newArray[index].price;
 
     setProducts(newArray);
+    calculateCheckout();
+  };
+
+  //
+  // Calculate the product price using the discount
+  // values of the product or the category.
+  //
+  const calculatePrice = (newProduct) => {
+    // Get the actual date
+    const newDate = new Date();
+    const newLocaleDateString = newDate.toLocaleDateString();
+
+    // Variable to store the final discount
+    let productDiscount = 0;
+
+    // Check if the discount date of the product is
+    // not expired. If not, get the discount of the product.
+    if (newProduct.discountExpiration > newLocaleDateString) {
+      productDiscount = newProduct.discount;
+    } else {
+      // Else check if the discount date of the category is
+      // not expired. If not, get the discount of the category.
+      const categoryToCheck = categoryDiscount.filter(
+        (item) => item.title === newProduct.category
+      );
+
+      if (categoryToCheck[0].discountExpiration > newLocaleDateString) {
+        productDiscount = categoryToCheck[0].discount;
+      }
+    }
+
+    // Finally, check if the product discount remais zero.
+    // If yes, send back the actual product price.
+    if (productDiscount === 0) {
+      return {
+        price: newProduct.price,
+        discount: productDiscount,
+      };
+    } else {
+      // Else calculate the discount and update the price
+      const finalDiscount = (productDiscount / 100) * newProduct.price;
+      return {
+        price: newProduct.price - finalDiscount,
+        discount: productDiscount,
+      };
+    }
+  };
+
+  //
+  // Calculate the checkout values
+  //
+  const calculateCheckout = () => {
+    /* const newGrandtotal = checkoutValues.grandtotal + priceToAdd;
+    const newTax = (storeData.tax / 100) * newGrandtotal;
+    const newSubtotal = newGrandtotal - newTax;
+
+    const newValues = {
+      subtotal: newSubtotal,
+      tax: newTax,
+      grandtotal: newGrandtotal,
+    };
+
+    setCheckoutValues(newValues); */
   };
 
   //
@@ -123,6 +264,7 @@ const Transaction = () => {
   const handleCancelClick = () => {
     const newArray = [];
     setProducts(newArray);
+    calculateCheckout();
 
     // Disable the transaction buttons
     setTransButtons(true);
@@ -208,6 +350,18 @@ const Transaction = () => {
               ))}
             </tbody>
           </table>
+          <div className="row justify-content-end">
+            <h6>Subtotal: €{checkoutValues.subtotal.toFixed(2)}</h6>
+          </div>
+          <hr></hr>
+          <div className="row justify-content-end">
+            <h6>Tax: €{checkoutValues.tax.toFixed(2)}</h6>
+          </div>
+          <hr></hr>
+          <div className="row justify-content-end">
+            <h4>Grand Total: €{checkoutValues.grandtotal.toFixed(2)}</h4>
+          </div>
+          <hr></hr>
           <div className="row justify-content-end">
             <button
               className="btn btn-danger transaction-button"
