@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
   productUpdate,
   productDelete,
@@ -12,6 +12,7 @@ import axios from "axios";
 import "./index.css";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
+import { StoreContext } from "../../context/StoreContext";
 
 const ProductEdit = () => {
   let history = useHistory();
@@ -22,6 +23,7 @@ const ProductEdit = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [deleteProduct, setDeleteProduct] = useState("");
   const [categories, setCategories] = useState([]);
+  const [storeData] = useContext(StoreContext);
   const [data, setData] = useState({
     title: productToEdit.title,
     description: productToEdit.description,
@@ -167,7 +169,7 @@ const ProductEdit = () => {
             </div>
             <div className="form-row">
               <div className="form-group col-md-4">
-                <label htmlFor="price">Price</label>
+                <label htmlFor="price">Price ({storeData.currency})</label>
                 <input
                   type="number"
                   className="form-control"

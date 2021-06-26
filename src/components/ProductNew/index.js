@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { productCreate, apiUrl } from "../../components/HelperFunctions";
 import { useHistory } from "react-router-dom";
 import queryString from "query-string";
@@ -8,6 +8,7 @@ import axios from "axios";
 import "./index.css";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
+import { StoreContext } from "../../context/StoreContext";
 
 const ProductNew = () => {
   let history = useHistory();
@@ -15,6 +16,7 @@ const ProductNew = () => {
   // Get the params and set them to data object
   const [startDate, setStartDate] = useState(new Date());
   const [categories, setCategories] = useState([]);
+  const [storeData] = useContext(StoreContext);
   const [data, setData] = useState({
     title: "",
     description: "",
@@ -142,7 +144,7 @@ const ProductNew = () => {
             </div>
             <div className="form-row">
               <div className="form-group col-md-4">
-                <label htmlFor="price">Price</label>
+                <label htmlFor="price">Price ({storeData.currency})</label>
                 <input
                   type="number"
                   className="form-control"

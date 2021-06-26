@@ -93,7 +93,7 @@ const BarcodePicker = (props) => {
             />
           </div>
           <div className="form-group col-md-6">
-            <label htmlFor="price">Price</label>
+            <label htmlFor="price">Price (€)</label>
             <input
               type="number"
               className="form-control"

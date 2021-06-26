@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { apiUrl, productsByCategory } from "../../components/HelperFunctions";
+import { StoreContext } from "../../context/StoreContext";
 import axios from "axios";
 import "./index.css";
 import Dropdown from "react-dropdown";
@@ -10,6 +11,7 @@ import queryString from "query-string";
 const Products = () => {
   const history = useHistory();
   const [data, setData] = useState([]);
+  const [storeData] = useContext(StoreContext);
   const [search, setSearch] = useState("");
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -277,7 +279,10 @@ const Products = () => {
                   <td>{item.title}</td>
                   <td>{item.description}</td>
                   <td>{item.category}</td>
-                  <td>{"€" + item.price.toFixed(2)}</td>
+                  <td>
+                    {storeData.currency}
+                    {item.price.toFixed(2)}
+                  </td>
                   <td>{item.barcode}</td>
                   <td>{item.discount + "%"}</td>
                   <td>{item.discountExpiration}</td>

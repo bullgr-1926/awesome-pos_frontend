@@ -1,14 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { apiUrl } from "../../components/HelperFunctions";
 import axios from "axios";
 import ProductPicker from "../../components/ProductPicker";
 import BarcodePicker from "../../components/BarcodePicker";
+import CheckoutPrint from "../../components/CheckoutPrint";
+import { CartContext } from "../../context/CartContext";
+import { StoreContext } from "../../context/StoreContext";
 import "./index.css";
 
 const Transaction = () => {
+  const history = useHistory();
   const [toggleBarcode, setToggleBarcode] = useState(true);
-  const [products, setProducts] = useState([]);
-  const [storeData, setStoreData] = useState([]);
+  const [products, setProducts] = useContext(CartContext);
+  const [storeData] = useContext(StoreContext);
   const [transButtons, setTransButtons] = useState(true);
   const [categoryDiscount, setCategoryDiscount] = useState([]);
   const [checkoutValues, setCheckoutValues] = useState({
@@ -48,32 +53,44 @@ const Transaction = () => {
       }
     };
 
-    // Get all store data
-    const fetchStoreData = async () => {
-      try {
-        const response = await axios.get(`${apiUrl}store/`, {
-          headers: {
-            "auth-token": localStorage.usertoken,
-          },
-        });
-        // Set only the first array entry
-        setStoreData(response.data.store[0]);
-      } catch (error) {
-        console.error(error.response.data);
-        alert(error.response.data);
-      }
-    };
-
     // Fetch all categories if not already fetched
     if (categoryDiscount.length === 0) {
       fetchAllCategories();
     }
+  }, [categoryDiscount]);
 
-    // Fetch all store data if not already fetched
-    if (storeData.length === 0) {
-      fetchStoreData();
+  //
+  // Calculate the checkout values everytime
+  // the products array changes.
+  //
+  useEffect(() => {
+    let newGrandtotal = 0;
+
+    // Get the total price for each product and add to the grandtotal
+    products.forEach((item) => {
+      newGrandtotal += item.totalPrice;
+    });
+
+    // Calculate the subtotal and tax using the grandtotal
+    const newTax = (storeData.tax / 100) * newGrandtotal;
+    const newSubtotal = newGrandtotal - newTax;
+
+    // Create an new object with these values and
+    // set it to checkout values.
+    const newValues = {
+      subtotal: newSubtotal,
+      tax: newTax,
+      grandtotal: newGrandtotal,
+    };
+
+    setCheckoutValues(newValues);
+
+    // Enable the transaction buttons
+    // if there are data in products array.
+    if (products.length !== 0) {
+      setTransButtons(false);
     }
-  }, [categoryDiscount, storeData]);
+  }, [products, storeData]);
 
   //
   // Set new product in products array.
@@ -115,12 +132,9 @@ const Transaction = () => {
       setProducts((previous) => {
         return [...previous, newProduct];
       });
-
-      // Update the checkout values
-      calculateCheckout();
     }
 
-    //Activate the transaction buttons
+    // Activate the transaction buttons
     // if not already.
     setTransButtons(false);
   };
@@ -130,6 +144,14 @@ const Transaction = () => {
   //
   const handleToggleClick = () => {
     setToggleBarcode(!toggleBarcode);
+  };
+
+  //
+  // Send the products data to print the receipt
+  //
+  const handleCheckoutClick = () => {
+    history.push("/checkout_print", { params: products });
+    /* window.print(); */
   };
 
   //
@@ -170,7 +192,6 @@ const Transaction = () => {
     const newArray = [...products];
     newArray.splice(indexOfItem, 1);
     setProducts(newArray);
-    calculateCheckout();
 
     // Check if there is any product in cart.
     // If not, disable the transaction buttons.
@@ -192,7 +213,6 @@ const Transaction = () => {
     newArray[index].totalPrice = amount * newArray[index].price;
 
     setProducts(newArray);
-    calculateCheckout();
   };
 
   //
@@ -209,7 +229,7 @@ const Transaction = () => {
 
     // Check if the discount date of the product is
     // not expired. If not, get the discount of the product.
-    if (newProduct.discountExpiration > newLocaleDateString) {
+    if (newProduct.discountExpiration >= newLocaleDateString) {
       productDiscount = newProduct.discount;
     } else {
       // Else check if the discount date of the category is
@@ -218,7 +238,7 @@ const Transaction = () => {
         (item) => item.title === newProduct.category
       );
 
-      if (categoryToCheck[0].discountExpiration > newLocaleDateString) {
+      if (categoryToCheck[0].discountExpiration >= newLocaleDateString) {
         productDiscount = categoryToCheck[0].discount;
       }
     }
@@ -241,30 +261,12 @@ const Transaction = () => {
   };
 
   //
-  // Calculate the checkout values
-  //
-  const calculateCheckout = () => {
-    /* const newGrandtotal = checkoutValues.grandtotal + priceToAdd;
-    const newTax = (storeData.tax / 100) * newGrandtotal;
-    const newSubtotal = newGrandtotal - newTax;
-
-    const newValues = {
-      subtotal: newSubtotal,
-      tax: newTax,
-      grandtotal: newGrandtotal,
-    };
-
-    setCheckoutValues(newValues); */
-  };
-
-  //
   // Cancel transaction.
   // Empty the cart (products).
   //
   const handleCancelClick = () => {
     const newArray = [];
     setProducts(newArray);
-    calculateCheckout();
 
     // Disable the transaction buttons
     setTransButtons(true);
@@ -374,13 +376,12 @@ const Transaction = () => {
             <button
               className="btn btn-success transaction-button"
               type="button"
-              onClick={handleToggleClick}
+              onClick={handleCheckoutClick}
               disabled={transButtons}
             >
               <i className="bi bi-cart-check"></i> Checkout
             </button>
           </div>
-          <div className="row justify-content-end"></div>
         </div>
       </div>
     </div>

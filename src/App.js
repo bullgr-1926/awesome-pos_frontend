@@ -1,5 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { CartController } from "./context/CartContext";
+import { StoreController } from "./context/StoreContext";
 
 // Navigation bar
 import Navbar from "./components/Navbar";
@@ -24,6 +26,7 @@ import ProductNew from "./components/ProductNew";
 import ProfileEdit from "./components/ProfileEdit";
 import UserEdit from "./components/UserEdit";
 import UserNew from "./components/UserNew";
+import CheckoutPrint from "./components/CheckoutPrint";
 
 const App = () => {
   return (
@@ -33,22 +36,27 @@ const App = () => {
           <Navbar />
           <Route exact path="/" component={Landing} />
           <div className="container">
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/dashboard" component={Dashboard} />
-            <Route exact path="/transaction" component={Transaction} />
-            <Route exact path="/report" component={Report} />
-            <Route exact path="/categories" component={Categories} />
-            <Route exact path="/products" component={Products} />
-            <Route exact path="/users" component={Users} />
-            <Route exact path="/profile" component={Profile} />
-            <Route exact path="/store" component={Store} />
-            <Route exact path="/category_edit" component={CategoryEdit} />
-            <Route exact path="/category_new" component={CategoryNew} />
-            <Route exact path="/product_edit" component={ProductEdit} />
-            <Route exact path="/product_new" component={ProductNew} />
-            <Route exact path="/profile_edit" component={ProfileEdit} />
-            <Route exact path="/user_edit" component={UserEdit} />
-            <Route exact path="/user_new" component={UserNew} />
+            <CartController>
+              <StoreController>
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/dashboard" component={Dashboard} />
+                <Route exact path="/transaction" component={Transaction} />
+                <Route exact path="/report" component={Report} />
+                <Route exact path="/categories" component={Categories} />
+                <Route exact path="/products" component={Products} />
+                <Route exact path="/users" component={Users} />
+                <Route exact path="/profile" component={Profile} />
+                <Route exact path="/store" component={Store} />
+                <Route exact path="/category_edit" component={CategoryEdit} />
+                <Route exact path="/category_new" component={CategoryNew} />
+                <Route exact path="/product_edit" component={ProductEdit} />
+                <Route exact path="/product_new" component={ProductNew} />
+                <Route exact path="/profile_edit" component={ProfileEdit} />
+                <Route exact path="/user_edit" component={UserEdit} />
+                <Route exact path="/user_new" component={UserNew} />
+                <Route exact path="/checkout_print" component={CheckoutPrint} />
+              </StoreController>
+            </CartController>
           </div>
         </div>
       </div>
