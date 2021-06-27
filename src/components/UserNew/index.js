@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import { register, userRoles } from "../../components/HelperFunctions";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
-import queryString from "query-string";
 
 const UserNew = () => {
   let history = useHistory();
@@ -91,7 +90,7 @@ const UserNew = () => {
 
     // If submit boolean is true, submit the data
     if (submitData) {
-      register(queryString.stringify(profile)).then((res) => {
+      register(profile).then((res) => {
         if (res) {
           history.push("/users");
         }

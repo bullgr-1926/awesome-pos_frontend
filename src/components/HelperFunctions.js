@@ -249,6 +249,27 @@ export const userDelete = async (id) => {
 };
 
 //
+// Create a new receipt
+//
+export const receiptCreate = async (receiptToCreate) => {
+  try {
+    const response = await axios.post(
+      `${apiUrl}receipts/add_receipt`,
+      receiptToCreate,
+      {
+        headers: {
+          "auth-token": localStorage.usertoken,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error.response.data);
+    alert(error.response.data);
+  }
+};
+
+//
 // Return the decoded token (if any)
 //
 export const getToken = () => {

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { login } from "../../components/HelperFunctions";
-import queryString from "query-string";
 import "./index.css";
 
 const Login = () => {
@@ -32,7 +31,7 @@ const Login = () => {
       password: loginUser.password,
     };
 
-    login(queryString.stringify(user)).then((res) => {
+    login(user).then((res) => {
       if (res) {
         history.push("/dashboard");
       }

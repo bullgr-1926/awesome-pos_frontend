@@ -5,7 +5,6 @@ import {
   apiUrl,
 } from "../../components/HelperFunctions";
 import { useHistory, useLocation } from "react-router-dom";
-import queryString from "query-string";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
@@ -72,13 +71,11 @@ const ProductEdit = () => {
       });
     } else {
       // If not, update the product
-      productUpdate(productToEdit._id, queryString.stringify(data)).then(
-        (res) => {
-          if (res) {
-            history.push("/products");
-          }
+      productUpdate(productToEdit._id, data).then((res) => {
+        if (res) {
+          history.push("/products");
         }
-      );
+      });
     }
   };
 

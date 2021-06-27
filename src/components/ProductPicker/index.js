@@ -4,7 +4,6 @@ import axios from "axios";
 import "./index.css";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
-import queryString from "query-string";
 
 const ProductPicker = (props) => {
   const [data, setData] = useState([]);
@@ -19,6 +18,8 @@ const ProductPicker = (props) => {
   const [nextDisable, setNextDisable] = useState(true);
   const [pageData, setPageData] = useState([]);
   const itemsPerPage = 12;
+
+  /* console.log(pageData); */
 
   //
   // Fetch the data on the beginning and on every search
@@ -141,10 +142,13 @@ const ProductPicker = (props) => {
   }, [data]);
 
   //
-  // Send the correspond id data back to container
+  // Send the correspond id data back to container.
+  // Before we must calculate the actual page with
+  // items per page and the picked id.
   //
   const handleProductClick = (e) => {
-    const pickedProduct = data[e.target.id];
+    const productId = e.target.id;
+    const pickedProduct = pageData[productId];
     props.handlePickProduct(pickedProduct);
   };
 
@@ -155,7 +159,7 @@ const ProductPicker = (props) => {
     let categoryToSearch = {
       category: e.value,
     };
-    productsByCategory(queryString.stringify(categoryToSearch)).then((res) => {
+    productsByCategory(categoryToSearch).then((res) => {
       if (res) {
         setData(res);
       }

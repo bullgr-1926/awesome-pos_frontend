@@ -44,7 +44,7 @@ const Users = () => {
   return (
     <div className="container fadeIn">
       <br />
-      <h1 className="text-center">Users</h1>
+      <h2 className="text-center">Users</h2>
       <br />
       <button
         className="btn btn-dark button-right"

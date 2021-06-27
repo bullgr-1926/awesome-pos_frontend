@@ -5,7 +5,6 @@ import {
   profileUpdate,
   profileDelete,
 } from "../../components/HelperFunctions";
-import queryString from "query-string";
 
 const ProfileEdit = () => {
   let history = useHistory();
@@ -128,13 +127,11 @@ const ProfileEdit = () => {
 
       // If submit boolean is true, submit the data
       if (submitData) {
-        profileUpdate(profile.id, queryString.stringify(profile)).then(
-          (res) => {
-            if (res) {
-              history.push("/profile");
-            }
+        profileUpdate(profile.id, profile).then((res) => {
+          if (res) {
+            history.push("/profile");
           }
-        );
+        });
       }
     }
   };

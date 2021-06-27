@@ -44,7 +44,7 @@ const Profile = () => {
   return (
     <div className="container fadeIn">
       <div className="col-md-6 mt-5 mx-auto">
-        <h1 className="text-center">User Profile</h1>
+        <h2 className="text-center">User Profile</h2>
         <br />
         {isLoading ? (
           <>Loading...</>

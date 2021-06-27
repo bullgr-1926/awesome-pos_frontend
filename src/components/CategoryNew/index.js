@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { categoryCreate } from "../../components/HelperFunctions";
 import { useHistory } from "react-router-dom";
-import queryString from "query-string";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./index.css";
@@ -21,7 +20,7 @@ const CategoryNew = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    categoryCreate(queryString.stringify(data)).then((res) => {
+    categoryCreate(data).then((res) => {
       if (res) {
         history.push("/categories");
       }

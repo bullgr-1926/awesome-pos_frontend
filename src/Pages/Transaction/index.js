@@ -4,7 +4,6 @@ import { apiUrl } from "../../components/HelperFunctions";
 import axios from "axios";
 import ProductPicker from "../../components/ProductPicker";
 import BarcodePicker from "../../components/BarcodePicker";
-import CheckoutPrint from "../../components/CheckoutPrint";
 import { CartContext } from "../../context/CartContext";
 import { StoreContext } from "../../context/StoreContext";
 import "./index.css";
@@ -18,7 +17,7 @@ const Transaction = () => {
   const [categoryDiscount, setCategoryDiscount] = useState([]);
   const [checkoutValues, setCheckoutValues] = useState({
     subtotal: 0,
-    tax: 0,
+    taxtotal: 0,
     grandtotal: 0,
   });
 
@@ -79,7 +78,7 @@ const Transaction = () => {
     // set it to checkout values.
     const newValues = {
       subtotal: newSubtotal,
-      tax: newTax,
+      taxtotal: newTax,
       grandtotal: newGrandtotal,
     };
 
@@ -150,7 +149,7 @@ const Transaction = () => {
   // Send the products data to print the receipt
   //
   const handleCheckoutClick = () => {
-    history.push("/checkout_print", { params: products });
+    history.push("/checkout_print", { params: checkoutValues });
     /* window.print(); */
   };
 
@@ -320,7 +319,10 @@ const Transaction = () => {
                   <td>{item.title}</td>
                   <td>{item.items}</td>
                   <td>{item.discount + "%"}</td>
-                  <td>{"€" + item.totalPrice.toFixed(2)}</td>
+                  <td>
+                    {storeData.currency}
+                    {item.totalPrice.toFixed(2)}
+                  </td>
                   <td>
                     <button className="btn" type="button">
                       <i
@@ -353,15 +355,24 @@ const Transaction = () => {
             </tbody>
           </table>
           <div className="row justify-content-end">
-            <h6>Subtotal: €{checkoutValues.subtotal.toFixed(2)}</h6>
+            <h6>
+              Subtotal: {storeData.currency}
+              {checkoutValues.subtotal.toFixed(2)}
+            </h6>
           </div>
           <hr></hr>
           <div className="row justify-content-end">
-            <h6>Tax: €{checkoutValues.tax.toFixed(2)}</h6>
+            <h6>
+              Tax({storeData.tax}%): {storeData.currency}
+              {checkoutValues.taxtotal.toFixed(2)}
+            </h6>
           </div>
           <hr></hr>
           <div className="row justify-content-end">
-            <h4>Grand Total: €{checkoutValues.grandtotal.toFixed(2)}</h4>
+            <h4>
+              Grand Total: {storeData.currency}
+              {checkoutValues.grandtotal.toFixed(2)}
+            </h4>
           </div>
           <hr></hr>
           <div className="row justify-content-end">

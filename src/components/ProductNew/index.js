@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { productCreate, apiUrl } from "../../components/HelperFunctions";
 import { useHistory } from "react-router-dom";
-import queryString from "query-string";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
@@ -56,7 +55,7 @@ const ProductNew = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    productCreate(queryString.stringify(data)).then((res) => {
+    productCreate(data).then((res) => {
       if (res) {
         history.push("/products");
       }

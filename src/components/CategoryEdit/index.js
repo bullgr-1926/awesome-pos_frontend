@@ -4,7 +4,6 @@ import {
   categoryDelete,
 } from "../../components/HelperFunctions";
 import { useHistory, useLocation } from "react-router-dom";
-import queryString from "query-string";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./index.css";
@@ -38,13 +37,11 @@ const CategoryEdit = () => {
       });
     } else {
       // If not, update the category
-      categoryUpdate(categoryToEdit._id, queryString.stringify(data)).then(
-        (res) => {
-          if (res) {
-            history.push("/categories");
-          }
+      categoryUpdate(categoryToEdit._id, data).then((res) => {
+        if (res) {
+          history.push("/categories");
         }
-      );
+      });
     }
   };
 

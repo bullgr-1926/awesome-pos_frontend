@@ -122,7 +122,7 @@ const Categories = () => {
 
     // Define the new indexes to get the page data
     let startIndex = prevPage * itemsPerPage;
-    let endIndex = startIndex + itemsPerPage - 1;
+    let endIndex = startIndex + itemsPerPage;
 
     // Disable the prev button if we are
     // on the first page
@@ -152,7 +152,7 @@ const Categories = () => {
 
     // Define the new indexes to get the page data
     let startIndex = nextPage * itemsPerPage;
-    let endIndex = startIndex + itemsPerPage - 1;
+    let endIndex = startIndex + itemsPerPage;
 
     // If we are on the last page, check if the
     // data are less than the end index.
@@ -181,7 +181,7 @@ const Categories = () => {
   return (
     <div className="container fadeIn">
       <br />
-      <h1 className="text-center">Categories</h1>
+      <h2 className="text-center">Categories</h2>
       <br />
       <label>Search</label>{" "}
       <input

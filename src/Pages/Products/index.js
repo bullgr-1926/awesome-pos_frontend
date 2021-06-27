@@ -6,7 +6,6 @@ import axios from "axios";
 import "./index.css";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
-import queryString from "query-string";
 
 const Products = () => {
   const history = useHistory();
@@ -151,7 +150,7 @@ const Products = () => {
     let categoryToSearch = {
       category: e.value,
     };
-    productsByCategory(queryString.stringify(categoryToSearch)).then((res) => {
+    productsByCategory(categoryToSearch).then((res) => {
       if (res) {
         setData(res);
       }
@@ -227,7 +226,7 @@ const Products = () => {
   return (
     <div className="container fadeIn">
       <br />
-      <h1 className="text-center">Products</h1>
+      <h2 className="text-center">Products</h2>
       <br />
       <label>Search</label>{" "}
       <input

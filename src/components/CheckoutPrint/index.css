@@ -1,30 +1,50 @@
-.slideInRight {
-  -webkit-animation-name: slideInRight;
-  animation-name: slideInRight;
+.fadeIn {
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
 }
-@-webkit-keyframes slideInRight {
+@-webkit-keyframes fadeIn {
   0% {
-    -webkit-transform: translateX(100%);
-    transform: translateX(100%);
-    visibility: visible;
+    opacity: 0;
   }
   100% {
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
+    opacity: 1;
   }
 }
-@keyframes slideInRight {
+@keyframes fadeIn {
   0% {
-    -webkit-transform: translateX(100%);
-    transform: translateX(100%);
-    visibility: visible;
+    opacity: 0;
   }
   100% {
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.table-receipt {
+  font-size: 12px;
+}
+
+.h6-receipt {
+  font-size: 12px;
+}
+
+.h4-receipt {
+  font-size: 14px;
+}
+
+.checkoutValue {
+  margin-right: 20px;
+}
+
+.transaction-button {
+  margin: 10px;
+}
+
+@media print {
+  .printPageButton {
+    display: none;
   }
 }
