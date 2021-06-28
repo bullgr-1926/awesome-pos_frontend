@@ -21,7 +21,7 @@ const ProductNew = () => {
     description: "",
     category: "",
     price: 0,
-    barcode: "0",
+    barcode: "",
     discount: 0,
     discountExpiration: new Date().toLocaleDateString(),
   });
@@ -148,7 +148,7 @@ const ProductNew = () => {
                   type="number"
                   className="form-control"
                   name="price"
-                  value={data.price.toFixed(2)}
+                  value={data.price}
                   required
                   min="0"
                   step="0.01"

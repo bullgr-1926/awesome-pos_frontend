@@ -108,7 +108,7 @@ const Categories = () => {
   // Route to CategoryEdit with the correspond id
   //
   const handleEditClick = (e) => {
-    const categoryToEdit = data[e.target.id];
+    const categoryToEdit = pageData[e.target.id];
     history.push("/category_edit", { params: categoryToEdit });
   };
 

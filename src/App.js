@@ -27,6 +27,7 @@ import ProfileEdit from "./components/ProfileEdit";
 import UserEdit from "./components/UserEdit";
 import UserNew from "./components/UserNew";
 import CheckoutPrint from "./components/CheckoutPrint";
+import ReceiptView from "./components/ReceiptView";
 
 const App = () => {
   return (
@@ -55,6 +56,7 @@ const App = () => {
                 <Route exact path="/user_edit" component={UserEdit} />
                 <Route exact path="/user_new" component={UserNew} />
                 <Route exact path="/checkout_print" component={CheckoutPrint} />
+                <Route exact path="/receipt_view" component={ReceiptView} />
               </StoreController>
             </CartController>
           </div>

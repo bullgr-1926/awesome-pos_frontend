@@ -65,9 +65,9 @@ const Users = () => {
             <thead>
               <tr>
                 <th scope="col">#</th>
+                <th scope="col">User ID</th>
                 <th scope="col">Firstname</th>
                 <th scope="col">Lastname</th>
-                <th scope="col">Username</th>
                 <th scope="col">Email</th>
                 <th scope="col">Role</th>
                 <th scope="col">Delete</th>
@@ -77,9 +77,9 @@ const Users = () => {
               {data.map((item, index) => (
                 <tr key={index}>
                   <th scope="col">{index + 1}</th>
+                  <td>{item._id}</td>
                   <td>{item.firstname}</td>
                   <td>{item.lastname}</td>
-                  <td>{item.username}</td>
                   <td>{item.email}</td>
                   <td>{item.role}</td>
                   <td>
