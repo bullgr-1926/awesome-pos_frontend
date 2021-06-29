@@ -18,6 +18,7 @@ const CheckoutPrint = () => {
   const [products, setProducts] = useContext(CartContext);
   const [storeData] = useContext(StoreContext);
   const [dateString, setDateString] = useState("");
+  const [receiptId, setReceiptId] = useState("");
 
   // Receipt data object
   const receiptData = {
@@ -66,16 +67,20 @@ const CheckoutPrint = () => {
 
   //
   // Print the receipt and save it to database.
-  // Toggle also the cancel and done buttons.
   //
   const handlePrintClick = () => {
-    // Print the receipt
-    window.print();
-
-    // Save the receipt to database and if successfull
-    // empty the products array (cart) and return to transaction page.
+    // Save the receipt to database and if successfull...
     receiptCreate(receiptData).then((res) => {
       if (res) {
+        // ...set the id from response
+        // to the receipt that we will print...
+        setReceiptId(res);
+
+        // ...print the receipt...
+        window.print();
+
+        // ...empty the products array (cart)
+        // and return to transaction page.
         setProducts([]);
         history.push("/transaction");
       }
@@ -97,7 +102,11 @@ const CheckoutPrint = () => {
             Tel. {storeData.phone}
           </h6>
           <h6 className="text-center h6-receipt">{dateString}</h6>
-          <h6 className="text-center user-id h6-receipt">{userId}</h6>
+          <h6 className="text-center h6-receipt">
+            {receiptId}
+            <br />
+            {userId}
+          </h6>
           <table className="table table-receipt">
             <thead>
               <tr>

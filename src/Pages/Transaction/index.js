@@ -150,7 +150,6 @@ const Transaction = () => {
   //
   const handleCheckoutClick = () => {
     history.push("/checkout_print", { params: checkoutValues });
-    /* window.print(); */
   };
 
   //

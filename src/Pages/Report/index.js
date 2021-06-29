@@ -230,6 +230,7 @@ const Report = () => {
             <thead>
               <tr>
                 <th scope="col">Date</th>
+                <th scope="col">Receipt ID</th>
                 <th scope="col">User ID</th>
                 <th scope="col">Qty</th>
                 <th scope="col">Grandtotal</th>
@@ -239,6 +240,7 @@ const Report = () => {
               {pageData.map((item, index) => (
                 <tr key={index} className="fadeIn">
                   <td>{item.createdAt}</td>
+                  <td>{item._id}</td>
                   <td>{item.userId}</td>
                   <td>{item.products.length}</td>
                   <td>
