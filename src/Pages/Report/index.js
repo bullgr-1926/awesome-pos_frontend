@@ -208,9 +208,9 @@ const Report = () => {
       <h2 className="text-center">Report</h2>
       <br />
       <div className="row justify-content-start">
-        <label>Search By Date </label>{" "}
         <DatePicker
           value={searchDate}
+          placeholderText="Search by date"
           selected={startDate}
           onChange={(date) => onDateChange(date)}
         />
@@ -239,7 +239,7 @@ const Report = () => {
             <tbody>
               {pageData.map((item, index) => (
                 <tr key={index} className="fadeIn">
-                  <td>{item.createdAt}</td>
+                  <td>{item.receiptDate}</td>
                   <td>{item._id}</td>
                   <td>{item.userId}</td>
                   <td>{item.products.length}</td>

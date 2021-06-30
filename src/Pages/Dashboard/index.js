@@ -1,6 +1,9 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import Chart from "bk-react-charts";
 import "bk-react-charts/dist/index.css";
+import axios from "axios";
+import "./index.css";
+import { apiUrl } from "../../components/HelperFunctions";
 
 const Dashboard = () => {
   let chartData = [
@@ -12,6 +15,38 @@ const Dashboard = () => {
     { day: "Sa", sales: 41 },
     { day: "Sun", sales: 40 },
   ];
+
+  const [data, setData] = useState([]);
+
+  let oneWeekAgo = new Date();
+  console.log(oneWeekAgo);
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+  console.log(oneWeekAgo);
+
+  console.log(data);
+
+  //
+  // Fetch the data on the beginning
+  //
+  useEffect(() => {
+    // Get all products
+    const fetchAllData = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}receipts/all`, {
+          headers: {
+            "auth-token": localStorage.usertoken,
+          },
+        });
+        setData(response.data.allReceipts);
+      } catch (error) {
+        console.error(error.response.data);
+        alert(error.response.data);
+      }
+    };
+
+    fetchAllData();
+  }, []);
+
   return (
     <div className="container fadeIn">
       <div className="row mt-5 mx-auto justify-content-between">

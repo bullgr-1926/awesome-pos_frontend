@@ -24,7 +24,7 @@ const CheckoutPrint = () => {
   const receiptData = {
     products: products,
     userId: userId,
-    createdAt: dateString,
+    receiptDate: dateString,
     tax: storeData.tax,
     subtotal: checkoutValues.subtotal,
     taxtotal: checkoutValues.taxtotal,

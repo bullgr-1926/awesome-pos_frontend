@@ -41,7 +41,7 @@ const ReceiptView = () => {
             <br />
             Tel. {storeData.phone}
           </h6>
-          <h6 className="text-center h6-receipt">{receiptData.createdAt}</h6>
+          <h6 className="text-center h6-receipt">{receiptData.receiptDate}</h6>
           <h6 className="text-center h6-receipt">
             {receiptData._id}
             <br />
