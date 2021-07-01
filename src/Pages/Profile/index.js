@@ -22,13 +22,16 @@ const Profile = () => {
     setIsLoading(true);
     const decoded = getToken();
 
+    // Set the last active date from the token
+    const lastActiveString = new Date(decoded.user.lastActive).toLocaleString();
+
     setProfile({
       username: decoded.user.username,
       email: decoded.user.email,
       firstname: decoded.user.firstname,
       lastname: decoded.user.lastname,
       role: decoded.user.role,
-      lastActive: decoded.user.lastActive,
+      lastActive: lastActiveString,
     });
 
     setIsLoading(false);

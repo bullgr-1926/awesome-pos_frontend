@@ -8,12 +8,13 @@ import "./index.css";
 const CategoryNew = () => {
   let history = useHistory();
   const [startDate, setStartDate] = useState(new Date());
+  const [displayDate, setDisplayDate] = useState("");
   const [data, setData] = useState({
     title: "",
     description: "",
     color: "#ffffff",
     discount: 0,
-    discountExpiration: new Date().toLocaleDateString(),
+    discountExpiration: new Date(),
   });
 
   // Submit the changes
@@ -30,12 +31,15 @@ const CategoryNew = () => {
   // Submit the changes from date picker
   const onDateChange = (newDate) => {
     let keyName = "discountExpiration";
-    let value = newDate.toLocaleDateString();
+    let newDisplayDate = newDate.toLocaleDateString();
+
     setStartDate(newDate);
+    setDisplayDate(newDisplayDate);
+
     setData((previous) => {
       return {
         ...previous,
-        [keyName]: value,
+        [keyName]: newDate,
       };
     });
   };
@@ -115,7 +119,8 @@ const CategoryNew = () => {
                 <label htmlFor="discountExpiration">Discount Expiration</label>{" "}
                 <DatePicker
                   name="discountExpiration"
-                  value={data.discountExpiration}
+                  value={displayDate}
+                  placeholderText="Pick a date"
                   selected={startDate}
                   onChange={(date) => onDateChange(date)}
                 />

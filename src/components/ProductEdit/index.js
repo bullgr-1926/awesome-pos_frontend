@@ -20,6 +20,7 @@ const ProductEdit = () => {
   const location = useLocation();
   const productToEdit = location.state.params;
   const [startDate, setStartDate] = useState(new Date());
+  const [displayDate, setDisplayDate] = useState("");
   const [deleteProduct, setDeleteProduct] = useState("");
   const [categories, setCategories] = useState([]);
   const [storeData] = useContext(StoreContext);
@@ -33,6 +34,20 @@ const ProductEdit = () => {
     discountExpiration: productToEdit.discountExpiration,
   });
 
+  //
+  // Set the display date on start
+  //
+  useEffect(() => {
+    if (data) {
+      const getDate = new Date(data.discountExpiration);
+      const finalDate = getDate.toLocaleDateString();
+      setDisplayDate(finalDate);
+    }
+  }, [data]);
+
+  //
+  // Fetch all categories if not already
+  //
   useEffect(() => {
     // Get all categories
     const fetchAllCategories = async () => {
@@ -82,12 +97,15 @@ const ProductEdit = () => {
   // Submit the changes from date picker
   const onDateChange = (newDate) => {
     let keyName = "discountExpiration";
-    let value = newDate.toLocaleDateString();
+    let newDisplayDate = newDate.toLocaleDateString();
+
     setStartDate(newDate);
+    setDisplayDate(newDisplayDate);
+
     setData((previous) => {
       return {
         ...previous,
-        [keyName]: value,
+        [keyName]: newDate,
       };
     });
   };
@@ -209,7 +227,8 @@ const ProductEdit = () => {
                 <label htmlFor="discountExpiration">Discount Expiration</label>{" "}
                 <DatePicker
                   name="discountExpiration"
-                  value={data.discountExpiration}
+                  value={displayDate}
+                  placeholderText="Pick a date"
                   selected={startDate}
                   onChange={(date) => onDateChange(date)}
                 />

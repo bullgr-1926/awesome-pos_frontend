@@ -218,16 +218,18 @@ const Transaction = () => {
   // values of the product or the category.
   //
   const calculatePrice = (newProduct) => {
-    // Get the actual date
-    const newDate = new Date();
-    const newLocaleDateString = newDate.toLocaleDateString();
+    // Get the actual date in miliseconds
+    const newDate = new Date().getTime();
+
+    // Convert the discount date of the product in miliseconds.
+    const discountDate = new Date(newProduct.discountExpiration).getTime();
 
     // Variable to store the final discount
     let productDiscount = 0;
 
     // Check if the discount date of the product is
     // not expired. If not, get the discount of the product.
-    if (newProduct.discountExpiration >= newLocaleDateString) {
+    if (discountDate >= newDate) {
       productDiscount = newProduct.discount;
     } else {
       // Else check if the discount date of the category is
@@ -236,7 +238,12 @@ const Transaction = () => {
         (item) => item.title === newProduct.category
       );
 
-      if (categoryToCheck[0].discountExpiration >= newLocaleDateString) {
+      // Convert the category discount date in miliseconds.
+      const categoryDiscountDate = new Date(
+        categoryToCheck[0].discountExpiration
+      ).getTime();
+
+      if (categoryDiscountDate >= newDate) {
         productDiscount = categoryToCheck[0].discount;
       }
     }

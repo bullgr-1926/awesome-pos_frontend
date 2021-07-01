@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { productByBarcode } from "../../components/HelperFunctions";
 import "./index.css";
 
@@ -10,24 +10,43 @@ const BarcodePicker = (props) => {
     price: 0,
   });
   const [barcode, setBarcode] = useState("");
+  const [delay, setDelay] = useState(false);
+
+  //
+  // Delay everytime the user submit a barcode
+  // to be able to see the barcode in the input
+  // field and empty after delay.
+  //
+  useEffect(() => {
+    if (delay) {
+      const interval = setInterval(() => {
+        setBarcode("");
+        setDelay(false);
+      }, 2000);
+
+      return () => clearInterval(interval);
+    }
+  }, [delay]);
 
   //
   // Submit and fetch the new barcode.
   // If succeed, set the product data.
-  // Finaly, send the product data to container
-  // and empty the barcode field.
+  // Finaly, set the delay to true to trigger.
   //
   const onSubmit = (e) => {
     e.preventDefault();
 
-    productByBarcode(barcode).then((res) => {
-      if (res) {
-        setProduct(res);
-        props.handlePickProduct(res);
-      }
-    });
+    // Fetch only if the barcode field is not empty
+    if (barcode) {
+      productByBarcode(barcode).then((res) => {
+        if (res) {
+          setProduct(res);
+          props.handlePickProduct(res);
+        }
+      });
 
-    setBarcode("");
+      setDelay(true);
+    }
   };
 
   //

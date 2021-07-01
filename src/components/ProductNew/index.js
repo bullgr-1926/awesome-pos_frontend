@@ -14,6 +14,7 @@ const ProductNew = () => {
 
   // Get the params and set them to data object
   const [startDate, setStartDate] = useState(new Date());
+  const [displayDate, setDisplayDate] = useState("");
   const [categories, setCategories] = useState([]);
   const [storeData] = useContext(StoreContext);
   const [data, setData] = useState({
@@ -23,7 +24,7 @@ const ProductNew = () => {
     price: 0,
     barcode: "",
     discount: 0,
-    discountExpiration: new Date().toLocaleDateString(),
+    discountExpiration: new Date(),
   });
 
   useEffect(() => {
@@ -65,12 +66,15 @@ const ProductNew = () => {
   // Submit the changes from date picker
   const onDateChange = (newDate) => {
     let keyName = "discountExpiration";
-    let value = newDate.toLocaleDateString();
+    let newDisplayDate = newDate.toLocaleDateString();
+
     setStartDate(newDate);
+    setDisplayDate(newDisplayDate);
+
     setData((previous) => {
       return {
         ...previous,
-        [keyName]: value,
+        [keyName]: newDate,
       };
     });
   };
@@ -186,7 +190,8 @@ const ProductNew = () => {
                 <label htmlFor="discountExpiration">Discount Expiration</label>{" "}
                 <DatePicker
                   name="discountExpiration"
-                  value={data.discountExpiration}
+                  value={displayDate}
+                  placeholderText="Pick a date"
                   selected={startDate}
                   onChange={(date) => onDateChange(date)}
                 />

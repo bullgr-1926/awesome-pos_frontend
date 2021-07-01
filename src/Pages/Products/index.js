@@ -223,6 +223,15 @@ const Products = () => {
     setPageData([...rows]);
   };
 
+  //
+  // Get and return the date to locale string
+  //
+  const dateToLocalstring = (dateToChange) => {
+    const getDate = new Date(dateToChange);
+    const finalDate = getDate.toLocaleDateString();
+    return finalDate;
+  };
+
   return (
     <div className="container fadeIn">
       <br />
@@ -284,7 +293,7 @@ const Products = () => {
                   </td>
                   <td>{item.barcode}</td>
                   <td>{item.discount + "%"}</td>
-                  <td>{item.discountExpiration}</td>
+                  <td>{dateToLocalstring(item.discountExpiration)}</td>
                   <td>
                     <button className="btn" type="button">
                       <i
