@@ -2,7 +2,8 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 
 // Api url preset
-export const apiUrl = `http://localhost:3002/`;
+export const apiUrl = `https://evening-lowlands-40863.herokuapp.com/`;
+/* export const apiUrl = `http://localhost:3002/`; */
 
 //
 // Register a user
