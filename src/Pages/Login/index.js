@@ -33,7 +33,11 @@ const Login = () => {
 
     login(user).then((res) => {
       if (res) {
-        history.push("/dashboard");
+        if (localStorage.userrole === "Admin") {
+          history.push("/dashboard");
+        } else {
+          history.push("/transaction");
+        }
       }
     });
   };

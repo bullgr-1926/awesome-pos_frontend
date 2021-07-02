@@ -74,18 +74,8 @@ const Navbar = () => {
   const userCashierLink = (
     <ul className="navbar-nav">
       <li className="nav-item">
-        <Link to="/dashboard" className="nav-link">
-          Dashboard
-        </Link>
-      </li>
-      <li className="nav-item">
         <Link to="/transaction" className="nav-link">
           Transaction
-        </Link>
-      </li>
-      <li className="nav-item">
-        <Link to="/report" className="nav-link">
-          Report
         </Link>
       </li>
       <li className="nav-item">

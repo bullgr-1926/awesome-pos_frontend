@@ -232,6 +232,19 @@ const Products = () => {
     return finalDate;
   };
 
+  //
+  // Check if the date is active (not expired).
+  // If yes, set the color to green.
+  //
+  const setDateColor = (dateToCheck) => {
+    const itemDate = new Date(dateToCheck).getTime();
+    const actualDate = new Date().getTime();
+
+    if (itemDate >= actualDate) {
+      return "green";
+    }
+  };
+
   return (
     <div className="container fadeIn">
       <br />
@@ -293,7 +306,13 @@ const Products = () => {
                   </td>
                   <td>{item.barcode}</td>
                   <td>{item.discount + "%"}</td>
-                  <td>{dateToLocalstring(item.discountExpiration)}</td>
+                  <td>
+                    <span
+                      style={{ color: setDateColor(item.discountExpiration) }}
+                    >
+                      {dateToLocalstring(item.discountExpiration)}
+                    </span>
+                  </td>
                   <td>
                     <button className="btn" type="button">
                       <i

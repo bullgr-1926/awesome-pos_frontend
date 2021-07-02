@@ -22,7 +22,7 @@ const BarcodePicker = (props) => {
       const interval = setInterval(() => {
         setBarcode("");
         setDelay(false);
-      }, 2000);
+      }, 1000);
 
       return () => clearInterval(interval);
     }
