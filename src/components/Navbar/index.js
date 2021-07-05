@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, withRouter, useHistory } from "react-router-dom";
 
 const Navbar = () => {
@@ -93,21 +92,7 @@ const Navbar = () => {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark rounded">
-      <button
-        className="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span className="navbar-toggler-icon" />
-      </button>
-      <div
-        className="collapse navbar-collapse justify-content-md-center"
-        id="navbarNav"
-      >
+      <div className="navbar-collapse justify-content-md-center">
         <ul className="navbar-nav">
           <li className="nav-item">
             <Link to="/" className="nav-link">
