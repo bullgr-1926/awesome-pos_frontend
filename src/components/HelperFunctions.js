@@ -1,5 +1,5 @@
-import axios from "axios";
-import jwt_decode from "jwt-decode";
+import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 
 // Api url preset
 export const apiUrl = `https://evening-lowlands-40863.herokuapp.com/`;
@@ -12,7 +12,7 @@ export const register = async (newUser) => {
   try {
     const response = await axios.post(`${apiUrl}user/register`, newUser, {
       headers: {
-        "auth-token": localStorage.usertoken,
+        'auth-token': localStorage.usertoken,
       },
     });
     return response.data;
@@ -47,7 +47,7 @@ export const categoryCreate = async (categoryToCreate) => {
       categoryToCreate,
       {
         headers: {
-          "auth-token": localStorage.usertoken,
+          'auth-token': localStorage.usertoken,
         },
       }
     );
@@ -68,7 +68,7 @@ export const categoryUpdate = async (id, categoryToEdit) => {
       categoryToEdit,
       {
         headers: {
-          "auth-token": localStorage.usertoken,
+          'auth-token': localStorage.usertoken,
         },
       }
     );
@@ -86,7 +86,7 @@ export const categoryDelete = async (id) => {
   try {
     const response = await axios.delete(`${apiUrl}categories/${id}`, {
       headers: {
-        "auth-token": localStorage.usertoken,
+        'auth-token': localStorage.usertoken,
       },
     });
     return response.data;
@@ -106,7 +106,7 @@ export const productsByCategory = async (categoryToSearch) => {
       categoryToSearch,
       {
         headers: {
-          "auth-token": localStorage.usertoken,
+          'auth-token': localStorage.usertoken,
         },
       }
     );
@@ -126,7 +126,7 @@ export const productByBarcode = async (barcodeToSearch) => {
       `${apiUrl}products/barcode/${barcodeToSearch}`,
       {
         headers: {
-          "auth-token": localStorage.usertoken,
+          'auth-token': localStorage.usertoken,
         },
       }
     );
@@ -147,7 +147,7 @@ export const productCreate = async (productToCreate) => {
       productToCreate,
       {
         headers: {
-          "auth-token": localStorage.usertoken,
+          'auth-token': localStorage.usertoken,
         },
       }
     );
@@ -165,7 +165,7 @@ export const productUpdate = async (id, productToEdit) => {
   try {
     const response = await axios.put(`${apiUrl}products/${id}`, productToEdit, {
       headers: {
-        "auth-token": localStorage.usertoken,
+        'auth-token': localStorage.usertoken,
       },
     });
     return response.data;
@@ -182,7 +182,7 @@ export const productDelete = async (id) => {
   try {
     const response = await axios.delete(`${apiUrl}products/${id}`, {
       headers: {
-        "auth-token": localStorage.usertoken,
+        'auth-token': localStorage.usertoken,
       },
     });
     return response.data;
@@ -202,7 +202,7 @@ export const profileUpdate = async (id, profileToEdit) => {
       profileToEdit,
       {
         headers: {
-          "auth-token": localStorage.usertoken,
+          'auth-token': localStorage.usertoken,
         },
       }
     );
@@ -222,7 +222,7 @@ export const profileDelete = async (id) => {
   try {
     const response = await axios.delete(`${apiUrl}user/delete_profile/${id}`, {
       headers: {
-        "auth-token": localStorage.usertoken,
+        'auth-token': localStorage.usertoken,
       },
     });
     return response.data;
@@ -239,7 +239,7 @@ export const userDelete = async (id) => {
   try {
     const response = await axios.delete(`${apiUrl}user/delete_user/${id}`, {
       headers: {
-        "auth-token": localStorage.usertoken,
+        'auth-token': localStorage.usertoken,
       },
     });
     return response.data;
@@ -259,7 +259,7 @@ export const receiptCreate = async (receiptToCreate) => {
       receiptToCreate,
       {
         headers: {
-          "auth-token": localStorage.usertoken,
+          'auth-token': localStorage.usertoken,
         },
       }
     );
@@ -284,7 +284,7 @@ export const getToken = () => {
 //
 export const setUserRole = () => {
   const userRole = getToken();
-  localStorage.setItem("userrole", userRole.user.role);
+  localStorage.setItem('userrole', userRole.user.role);
 };
 
 //
@@ -293,15 +293,15 @@ export const setUserRole = () => {
 export const setOrRefreshToken = (token) => {
   // Remove token and user role if any
   if (localStorage.usertoken) {
-    localStorage.removeItem("usertoken");
-    localStorage.removeItem("userrole");
+    localStorage.removeItem('usertoken');
+    localStorage.removeItem('userrole');
   }
 
   // Save the token to localStorage
-  localStorage.setItem("usertoken", token);
+  localStorage.setItem('usertoken', token);
   // Save the user role to localStorage
   setUserRole();
 };
 
 // User roles in database
-export const userRoles = ["Admin", "Cashier"];
+export const userRoles = ['Admin', 'Cashier'];

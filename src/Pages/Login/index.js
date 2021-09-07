@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { login } from "../../components/HelperFunctions";
-import "./index.css";
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { login } from '../../components/HelperFunctions';
+import './index.css';
 
 const Login = () => {
   const [loginUser, setLoginUser] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
     errors: {},
   });
 
@@ -33,10 +33,10 @@ const Login = () => {
 
     login(user).then((res) => {
       if (res) {
-        if (localStorage.userrole === "Admin") {
-          history.push("/dashboard");
+        if (localStorage.userrole === 'Admin') {
+          history.push('/dashboard');
         } else {
-          history.push("/transaction");
+          history.push('/transaction');
         }
       }
     });
@@ -79,6 +79,19 @@ const Login = () => {
               Sign in
             </button>
           </form>
+          <div>
+            <h5 className="mt-4">Demo Accounts:</h5>
+            <h6>Admin:</h6>
+            <span>Email: admin-login@gmail.com</span>
+            <br />
+            <span>Password: 12345678</span>
+            <br />
+            <br />
+            <h6>Cashier:</h6>
+            <span>Email: cashier-login@gmail.com</span>
+            <br />
+            <span>Password: 87654321</span>
+          </div>
         </div>
       </div>
     </div>
