@@ -33,8 +33,10 @@ const Login = () => {
 
     login(user).then((res) => {
       if (res) {
+        // Same redirection for both roles
+        // for demo purposes
         if (localStorage.userrole === 'Admin') {
-          history.push('/dashboard');
+          history.push('/transaction');
         } else {
           history.push('/transaction');
         }
