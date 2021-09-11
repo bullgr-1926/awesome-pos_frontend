@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=200px height=200px src="assets/logo.png" alt="Awesome POS logo"></a>
+ <img width=200px height=200px src="src/assets/logo.png" alt="Awesome POS logo"></a>
 </p>
 
 <h2 align="center">Awesome POS</h2>
